@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="upt.cs.fis.brebu.burada.AppTest" time="0.172" tests="1" errors="0" skipped="0" failures="0">
+  <properties>
+    <property name="java.specification.version" value="17"/>
+    <property name="sun.jnu.encoding" value="UTF-8"/>
+    <property name="java.class.path" value="/mnt/e/Facultate/fis/project/shopapp/target/test-classes:/mnt/e/Facultate/fis/project/shopapp/target/classes:/home/silver/.m2/repository/junit/junit/4.11/junit-4.11.jar:/home/silver/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/home/silver/.m2/repository/com/google/android/android/4.1.1.4/android-4.1.1.4.jar:/home/silver/.m2/repository/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar:/home/silver/.m2/repository/org/apache/httpcomponents/httpclient/4.0.1/httpclient-4.0.1.jar:/home/silver/.m2/repository/org/apache/httpcomponents/httpcore/4.0.1/httpcore-4.0.1.jar:/home/silver/.m2/repository/commons-codec/commons-codec/1.3/commons-codec-1.3.jar:/home/silver/.m2/repository/org/khronos/opengl-api/gl1.1-android-2.1_r1/opengl-api-gl1.1-android-2.1_r1.jar:/home/silver/.m2/repository/xerces/xmlParserAPIs/2.6.2/xmlParserAPIs-2.6.2.jar:/home/silver/.m2/repository/xpp3/xpp3/1.1.4c/xpp3-1.1.4c.jar:/home/silver/.m2/repository/org/json/json/20080701/json-20080701.jar:"/>
+    <property name="java.vm.vendor" value="Private Build"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="java.vendor.url" value="Unknown"/>
+    <property name="os.name" value="Linux"/>
+    <property name="java.vm.specification.version" value="17"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="sun.boot.library.path" value="/usr/lib/jvm/java-17-openjdk-amd64/lib"/>
+    <property name="sun.java.command" value="/mnt/e/Facultate/fis/project/shopapp/target/surefire/surefirebooter11953601155846031619.jar /mnt/e/Facultate/fis/project/shopapp/target/surefire 2024-04-03T19-16-51_338-jvmRun1 surefire15818017957249316063tmp surefire_012885294828636276628tmp"/>
+    <property name="jdk.debug" value="release"/>
+    <property name="surefire.test.class.path" value="/mnt/e/Facultate/fis/project/shopapp/target/test-classes:/mnt/e/Facultate/fis/project/shopapp/target/classes:/home/silver/.m2/repository/junit/junit/4.11/junit-4.11.jar:/home/silver/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/home/silver/.m2/repository/com/google/android/android/4.1.1.4/android-4.1.1.4.jar:/home/silver/.m2/repository/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar:/home/silver/.m2/repository/org/apache/httpcomponents/httpclient/4.0.1/httpclient-4.0.1.jar:/home/silver/.m2/repository/org/apache/httpcomponents/httpcore/4.0.1/httpcore-4.0.1.jar:/home/silver/.m2/repository/commons-codec/commons-codec/1.3/commons-codec-1.3.jar:/home/silver/.m2/repository/org/khronos/opengl-api/gl1.1-android-2.1_r1/opengl-api-gl1.1-android-2.1_r1.jar:/home/silver/.m2/repository/xerces/xmlParserAPIs/2.6.2/xmlParserAPIs-2.6.2.jar:/home/silver/.m2/repository/xpp3/xpp3/1.1.4c/xpp3-1.1.4c.jar:/home/silver/.m2/repository/org/json/json/20080701/json-20080701.jar:"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="user.home" value="/home/silver"/>
+    <property name="user.language" value="en"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.version.date" value="2023-08-24"/>
+    <property name="java.home" value="/usr/lib/jvm/java-17-openjdk-amd64"/>
+    <property name="file.separator" value="/"/>
+    <property name="basedir" value="/mnt/e/Facultate/fis/project/shopapp"/>
+    <property name="java.vm.compressedOopsMode" value="Zero based"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="surefire.real.class.path" value="/mnt/e/Facultate/fis/project/shopapp/target/surefire/surefirebooter11953601155846031619.jar"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="java.runtime.version" value="17.0.8.1+1-Ubuntu-0ubuntu120.04"/>
+    <property name="user.name" value="silver"/>
+    <property name="path.separator" value=":"/>
+    <property name="os.version" value="5.10.102.1-microsoft-standard-WSL2"/>
+    <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
+    <property name="localRepository" value="/home/silver/.m2/repository"/>
+    <property name="java.vendor.url.bug" value="Unknown"/>
+    <property name="java.io.tmpdir" value="/tmp"/>
+    <property name="java.version" value="17.0.8.1"/>
+    <property name="user.dir" value="/mnt/e/Facultate/fis/project/shopapp"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="native.encoding" value="UTF-8"/>
+    <property name="java.library.path" value="/usr/java/packages/lib:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib"/>
+    <property name="java.vm.info" value="mixed mode, sharing"/>
+    <property name="java.vendor" value="Private Build"/>
+    <property name="java.vm.version" value="17.0.8.1+1-Ubuntu-0ubuntu120.04"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="java.class.version" value="61.0"/>
+  </properties>
+  <testcase name="shouldAnswerWithTrue" classname="upt.cs.fis.brebu.burada.AppTest" time="0.007"/>
+</testsuite>
