@@ -1,10 +1,7 @@
 package cs.upt.store.service;
 
 import java.math.BigDecimal;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +11,6 @@ import cs.upt.store.exceptions.NonExistentCardException;
 import cs.upt.store.model.Card;
 import cs.upt.store.model.HashedCard;
 import cs.upt.store.repository.HashedCardRepository;
-import jakarta.validation.constraints.Null;
 
 
 
