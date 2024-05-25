@@ -2,6 +2,8 @@ package cs.upt.store.model;
 
 
 import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 import java.time.YearMonth;
 
 import org.bson.types.ObjectId;
@@ -68,4 +70,26 @@ public class Card{
         this.cvv = cvv;
         this.amount = amount;
     }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public String getExpMonth() {
+        return expMonth;
+    }
+
+    public String getExpYear() {
+        return expYear;
+    }
+
+    public String getCvv() {
+        return cvv;
+    }
+
+    public BigDecimal getAmount() {
+        return amount;
+    }
+    
+    
 }
