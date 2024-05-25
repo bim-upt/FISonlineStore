@@ -2,6 +2,8 @@ package cs.upt.store.model;
 
 
 import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 import java.time.YearMonth;
 
 import org.bson.types.ObjectId;
@@ -14,6 +16,7 @@ import org.springframework.validation.annotation.Validated;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -35,20 +38,9 @@ public class Card{
     private String number;
 
     @Valid
-    @NotBlank(message = "expiration month mandatory")
-    @Pattern(regexp = "[0-9]+", message = "Must only contain digits")
-    @NotEmpty(message = "expiration month mandatory")
-    @NotNull(message = "expiration month mandatory")
-    @Size(min=2,max=2,message = "Use a two digit format for single digit months")
-    private String expMonth;
-
-    @Valid
-    @NotBlank(message = "expiration year mandatory")
-    @NotEmpty(message = "expiration year mandatory")
-    @NotNull(message = "expiration year mandatory")
-    @Pattern(regexp = "[0-9]+", message = "Must only contain digits")
-    @Size(min=2,max=2,message = "Only the last two digits are needed")
-    private String expYear;
+    @Future
+    @NotNull(message = "expiration date mandatory")
+    private YearMonth expDate;
 
     @Valid
     @NotBlank(message = "expiration month mandatory")
@@ -61,11 +53,28 @@ public class Card{
     @NotNull
     private BigDecimal amount;
 
-    public Card(String number, String expMonth, String expYear, String cvv, BigDecimal amount) {
+    public Card(String number, YearMonth expDate, String cvv, BigDecimal amount) {
         this.number = number;
-        this.expMonth = expMonth;
-        this.expYear = expYear;
+        this.expDate = expDate;
         this.cvv = cvv;
         this.amount = amount;
     }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public String getExpDate() {
+        return expDate.toString();
+    }
+
+    public String getCvv() {
+        return cvv;
+    }
+
+    public BigDecimal getAmount() {
+        return amount;
+    }
+    
+    
 }

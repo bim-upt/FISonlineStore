@@ -5,8 +5,9 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 import cs.upt.store.model.Card;
+import cs.upt.store.model.HashedCard;
 
 @Repository
-public interface CardRepository extends MongoRepository<Card, ObjectId>{
+public interface HashedCardRepository extends MongoRepository<HashedCard, ObjectId>{
 
 }
