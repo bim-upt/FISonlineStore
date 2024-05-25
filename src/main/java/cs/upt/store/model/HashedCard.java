@@ -16,8 +16,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class HashedCard {
     @Id
     byte[] number;
-    byte[] expMonth;
-    byte[] expYear;
+    byte[] expDate;
     byte[] cvv;
     BigDecimal amount;
     public HashedCard(Card card) throws NoSuchAlgorithmException{
@@ -25,10 +24,8 @@ public class HashedCard {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             this.number = digest.digest(
                 card.getNumber().getBytes(StandardCharsets.UTF_8));
-            this.expMonth = digest.digest(
-                card.getExpMonth().getBytes(StandardCharsets.UTF_8));
-            this.expYear = digest.digest(
-                card.getExpYear().getBytes(StandardCharsets.UTF_8));
+            this.expDate = digest.digest(
+                card.getExpDate().getBytes(StandardCharsets.UTF_8));
             this.cvv = digest.digest(
                 card.getCvv().getBytes(StandardCharsets.UTF_8));
             this.amount = card.getAmount();
