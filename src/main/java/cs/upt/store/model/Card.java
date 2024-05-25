@@ -2,16 +2,12 @@ package cs.upt.store.model;
 
 
 import java.math.BigDecimal;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
 import java.time.YearMonth;
 
-import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.CreditCardNumber;
 import org.hibernate.validator.constraints.LuhnCheck;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
