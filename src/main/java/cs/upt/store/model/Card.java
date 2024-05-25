@@ -50,7 +50,6 @@ public class Card{
     @Size(min=3, max = 3, message = "Card verification value must contain 3 digits")
     private String cvv;
 
-    @NotNull
     private BigDecimal amount;
 
     public Card(String number, YearMonth expDate, String cvv, BigDecimal amount) {
@@ -75,6 +74,11 @@ public class Card{
     public BigDecimal getAmount() {
         return amount;
     }
+
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
+    }
+    
     
     
 }

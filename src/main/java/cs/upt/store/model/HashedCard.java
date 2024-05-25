@@ -16,7 +16,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class HashedCard {
     @Id
     byte[] number;
+    @Id
     byte[] expDate;
+    @Id
     byte[] cvv;
     BigDecimal amount;
     public HashedCard(Card card) throws NoSuchAlgorithmException{
