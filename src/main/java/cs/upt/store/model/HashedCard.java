@@ -15,25 +15,33 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Document(collection = "cards")
 public class HashedCard {
     @Id
-    byte[] number;
-    @Id
-    byte[] expDate;
-    @Id
-    byte[] cvv;
+    byte[] hash;
     BigDecimal amount;
+    
+    public HashedCard() {
+    }
     public HashedCard(Card card) throws NoSuchAlgorithmException{
         try{
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            this.number = digest.digest(
-                card.getNumber().getBytes(StandardCharsets.UTF_8));
-            this.expDate = digest.digest(
-                card.getExpDate().getBytes(StandardCharsets.UTF_8));
-            this.cvv = digest.digest(
-                card.getCvv().getBytes(StandardCharsets.UTF_8));
+            String stringToEncode = card.getNumber()+card.getExpDate()+card.getCvv();
+            this.hash = digest.digest(stringToEncode.getBytes(StandardCharsets.UTF_8));
             this.amount = card.getAmount();
         }catch(Exception e){
             throw e;
         }
     }
+    public BigDecimal getAmount() {
+        return amount;
+    }
+    public byte[] getHash() {
+        return hash;
+    }
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
+    }
+    public void setHash(byte[] hash) {
+        this.hash = hash;
+    }
+    
     
 }

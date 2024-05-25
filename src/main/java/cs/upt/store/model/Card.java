@@ -52,6 +52,7 @@ public class Card{
 
     private BigDecimal amount;
 
+    public Card(){}
     public Card(String number, YearMonth expDate, String cvv, BigDecimal amount) {
         this.number = number;
         this.expDate = expDate;
@@ -77,6 +78,18 @@ public class Card{
 
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    public void setExpDate(YearMonth expDate) {
+        this.expDate = expDate;
+    }
+
+    public void setCvv(String cvv) {
+        this.cvv = cvv;
     }
     
     
