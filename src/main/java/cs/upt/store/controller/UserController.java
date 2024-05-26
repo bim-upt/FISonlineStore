@@ -26,7 +26,7 @@ public class UserController {
     @PostMapping
     public ResponseEntity<HashedUser> addUser(@Valid @RequestBody User newUser){
         try{
-            HashedUser userSaved = userService.insertUser(newUser);
+            userService.insertUser(newUser);
             return new ResponseEntity<>(null, HttpStatus.CREATED);
         }catch(DataIntegrityViolationException e){
             return new ResponseEntity<>(null, HttpStatus.CONFLICT);
