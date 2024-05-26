@@ -35,6 +35,8 @@ public class User{
     @NotBlank(message = "Password is mandatory")
     private String password;
 
+    public User(){}
+
     public String getName() {
         return name;
     }
