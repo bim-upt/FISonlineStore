@@ -7,7 +7,7 @@ import java.time.YearMonth;
 import org.hibernate.validator.constraints.CreditCardNumber;
 import org.hibernate.validator.constraints.LuhnCheck;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -20,7 +20,6 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-@Document(collection = "cards")
 public class Card{
     
     @Valid
