@@ -1,5 +1,7 @@
 package cs.upt.store.DTO;
 
+import java.math.BigDecimal;
+
 import cs.upt.store.model.Product;
 
 
@@ -11,12 +13,13 @@ public class ProductDTO {
 
     private String code;
     private String seller;
-    
+    private BigDecimal price;
     private Boolean status;
     private String message;
     public ProductDTO(){}
     public ProductDTO(Product product, boolean status, String message){
         this.imgs = product.getImgs();
+        this.price = product.getPrice();
         this.name = product.getName();
         this.seller = product.getSeller();
         this.status = status;
@@ -77,5 +80,11 @@ public class ProductDTO {
 
     public String getCode(){
         return code;
+    }
+    public BigDecimal getPrice() {
+        return price;
+    }
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 }
