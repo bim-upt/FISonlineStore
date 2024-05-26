@@ -1,7 +1,7 @@
 package cs.upt.store.controller;
 
 import java.security.NoSuchAlgorithmException;
-import java.util.List;
+import java.util.List; 
 
 import javax.naming.NameNotFoundException;
 
@@ -79,7 +79,7 @@ public class ProductController {
             List<ProductDTO> products = productService.getProducts();
             return new ResponseEntity<>(products, HttpStatus.OK);
         }catch(Exception e){
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR); 
         }
     }
 } 
