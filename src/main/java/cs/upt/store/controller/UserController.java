@@ -1,6 +1,5 @@
 package cs.upt.store.controller;
 
-import java.security.NoSuchAlgorithmException;
 
 import javax.naming.NameNotFoundException;
 

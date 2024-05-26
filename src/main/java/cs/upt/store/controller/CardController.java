@@ -1,7 +1,6 @@
 package cs.upt.store.controller;
 
 import java.math.BigDecimal;
-import java.security.NoSuchAlgorithmException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -42,7 +41,7 @@ public class CardController {
         }
     } 
 
-    @PutMapping("add")
+    @PutMapping("addAmount")
     public ResponseEntity<HashedCardDTO> addToCardAmount(@RequestParam(required = true) BigDecimal amount, @Valid @RequestBody Card updatedCard){
         try{
             HashedCard resultingCard = new HashedCard(updatedCard);

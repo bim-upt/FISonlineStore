@@ -6,7 +6,6 @@ import cs.upt.store.model.Product;
 
 
 public class ProductDTO {
-	private ObjectId pid;
     
     private String name;
 
@@ -21,7 +20,6 @@ public class ProductDTO {
     public ProductDTO(Product product, boolean status, String message){
         this.imgs = product.getImgs();
         this.name = product.getName();
-        this.pid = product.getPid();
         this.seller = product.getSeller();
         this.status = status;
         this.message = message;
@@ -29,9 +27,7 @@ public class ProductDTO {
     }
     
 
-    public ObjectId getPid() {
-        return pid;
-    }
+ 
 
     public String getName() {
         return name;
@@ -45,9 +41,7 @@ public class ProductDTO {
         return seller;
     }
 
-    public void setPid(ObjectId pid) {
-        this.pid = pid;
-    }
+
 
     public void setName(String name) {
         this.name = name;
