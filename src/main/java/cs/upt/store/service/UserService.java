@@ -9,8 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cs.upt.store.DTO.HashedUserDTO;
+import cs.upt.store.exceptions.CardExistsException;
+import cs.upt.store.model.HashedCard;
 import cs.upt.store.model.HashedUser;
 import cs.upt.store.model.User;
+import cs.upt.store.repository.HashedCardRepository;
 import cs.upt.store.repository.HashedUserRepository;
 
 @Service
@@ -18,9 +21,21 @@ public class UserService {
     @Autowired
     private HashedUserRepository hashedUserRepository;
 
-    public HashedUser insertUser(User user) throws NoSuchAlgorithmException{
+    // @Autowired
+    // private HashedCardRepository hashedCardRepository;
+
+
+    public HashedUser insertUser(User user) throws NoSuchAlgorithmException, CardExistsException{
         try{
-            return hashedUserRepository.insert(new HashedUser(user));
+            HashedUser result = new HashedUser(user);
+            // if(user.getCreditCard() != null){
+            //     if(hashedCardRepository.findByHash(result.getCreditCard()) != null){
+            //         throw new CardExistsException("Card belongs to another user");
+            //     }else{
+            //         hashedCardRepository.insert(new HashedCard(user.getCreditCard()));
+            //     }
+            // }
+            return hashedUserRepository.insert(result);
         }catch(Exception e){
             throw e;
         }

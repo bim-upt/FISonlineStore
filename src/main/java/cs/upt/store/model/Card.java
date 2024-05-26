@@ -50,6 +50,9 @@ public class Card{
     @Positive
     private BigDecimal amount;
 
+    @NotBlank(message = "Are you lost")
+    private String owner;
+
     public Card(){}
     public Card(String number, YearMonth expDate, String cvv, BigDecimal amount) {
         this.number = number;
@@ -88,6 +91,12 @@ public class Card{
 
     public void setCvv(String cvv) {
         this.cvv = cvv;
+    }
+    public String getOwner() {
+        return owner;
+    }
+    public void setOwner(String owner) {
+        this.owner = owner;
     }
     
     

@@ -26,8 +26,7 @@ public class User{
     @Range(min = 0, max = 1, message = "Unkown user type")
     private int type; //0 - normal, 1 - seller
     
-    @DocumentReference
-    private List<Card> creditCards;
+    private Card creditCard;
     
     @Length(min = 6, message = "Password too short!")
     @NotEmpty(message = "Password is mandatory")
@@ -45,8 +44,8 @@ public class User{
         return type;
     }
 
-    public List<Card> getCreditCards() {
-        return creditCards;
+    public Card getCreditCard() {
+        return creditCard;
     }
 
     public String getPassword() {
@@ -61,8 +60,8 @@ public class User{
         this.type = type;
     }
 
-    public void setCreditCards(List<Card> creditCards) {
-        this.creditCards = creditCards;
+    public void setCreditCard(Card creditCard) {
+        this.creditCard = creditCard;
     }
 
     public void setPassword(String password) {

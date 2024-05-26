@@ -21,7 +21,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import cs.upt.store.DTO.OrderDTO;
 import cs.upt.store.DTO.ProductSoldDTO;
+import cs.upt.store.exceptions.InsufficientFundsException;
 import cs.upt.store.exceptions.NoEligibleProductsException;
+import cs.upt.store.exceptions.NonExistentCardException;
 import cs.upt.store.exceptions.UserIsSellerException;
 import cs.upt.store.model.Order;
 import cs.upt.store.service.OrderService;
@@ -41,14 +43,27 @@ public class OrderController {
         }catch(NameNotFoundException e){
             orderDTO.setMessage("Owner not found");
             orderDTO.setStatus(false);
+            orderDTO.setProducts(null);
             return new ResponseEntity<>(orderDTO, HttpStatus.NOT_FOUND);
         }catch(UserIsSellerException e){
             orderDTO.setMessage("Not a buyer");
             orderDTO.setStatus(false);
+            orderDTO.setProducts(null);
             return new ResponseEntity<>(orderDTO, HttpStatus.BAD_REQUEST);
+        }catch(InsufficientFundsException e){
+            orderDTO.setMessage("Insufficient funds for placing order");
+            orderDTO.setStatus(false);
+            orderDTO.setProducts(null);
+            return new ResponseEntity<>(orderDTO, HttpStatus.PAYMENT_REQUIRED);
+        }catch(NonExistentCardException e){
+            orderDTO.setMessage("No card associated to account");
+            orderDTO.setStatus(false);
+            orderDTO.setProducts(null);
+            return new ResponseEntity<>(orderDTO, HttpStatus.NOT_FOUND);
         }catch(NoEligibleProductsException e){
             orderDTO.setMessage("No product was acceptable");
             orderDTO.setStatus(false);
+            orderDTO.setProducts(null);
             return new ResponseEntity<>(orderDTO, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         catch(Exception e){

@@ -29,8 +29,8 @@ public class HashedUser {
     @Range(min = 0, max = 1, message = "Unkown user type")
     private int type; //0 - normal, 1 - seller
     
-    @DocumentReference
-    private List<Card> creditCards;
+    @NotNull(message = "With what money you gonna buy stuff")
+    private byte[] creditCard;
 
     public HashedUser(User user) throws NoSuchAlgorithmException{
         try{
@@ -38,7 +38,7 @@ public class HashedUser {
             String stringToEncode = user.getPassword();
             this.password = digest.digest(stringToEncode.getBytes(StandardCharsets.UTF_8));
             this.type = user.getType();
-            this.creditCards = user.getCreditCards();
+            //if(user.getCreditCard()!= null){this.creditCard = (new HashedCard(user.getCreditCard())).getHash();}
             this.name = user.getName();
         }catch(Exception e){
             throw e;
@@ -59,8 +59,8 @@ public class HashedUser {
         return type;
     }
 
-    public List<Card> getCreditCards() {
-        return creditCards;
+    public byte[] getCreditCard() {
+        return creditCard;
     }
 
     public void setName(String name) {
@@ -75,8 +75,8 @@ public class HashedUser {
         this.type = type;
     }
 
-    public void setCreditCards(List<Card> creditCards) {
-        this.creditCards = creditCards;
+    public void setCreditCard(byte[] creditCard) {
+        this.creditCard = creditCard;
     }    
     
 }
