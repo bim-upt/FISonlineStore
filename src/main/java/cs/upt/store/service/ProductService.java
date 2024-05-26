@@ -9,13 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException.NotFound;
 
 import cs.upt.store.DTO.HashedUserDTO;
 import cs.upt.store.exceptions.UserIsNotASellerException;
 import cs.upt.store.model.Product;
 import cs.upt.store.repository.ProductRepository;
-import jakarta.validation.constraints.Null;
 
 
 
@@ -63,5 +61,21 @@ public class ProductService {
         found.setImgs(product.getImgs());
         found.setName(product.getName());
         return productRepository.save(found);
+    }
+
+    public Product deleteProduct(String code, String seller) throws NotFoundException{
+        Product found = null;
+        List<Product> sellerProducts = productRepository.findBySeller(seller);
+        for (int i = 0; i < sellerProducts.size(); i++) {
+            if(sellerProducts.get(i).getCode().equals(code)){
+                found = sellerProducts.get(i);
+                break;
+            }
+        }
+        if(found == null){
+            throw new NotFoundException();
+        }
+        productRepository.deleteById(found.getPid());
+        return found;
     }
 }
