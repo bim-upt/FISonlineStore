@@ -1,12 +1,14 @@
 package cs.upt.store.model;
 
 
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -28,6 +30,7 @@ public class User{
     @DocumentReference
     private List<Card> creditCards;
     
+    @Length(min = 6, message = "Password too short!")
     @NotEmpty(message = "Password is mandatory")
     @NotNull(message = "Password is mandatory")
     @NotBlank(message = "Password is mandatory")

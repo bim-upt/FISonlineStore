@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 import cs.upt.store.model.HashedUser;
 
 @Repository
-public interface HashedUserRepository extends MongoRepository<HashedUser, byte[]>{
+public interface HashedUserRepository extends MongoRepository<HashedUser, String>{
 }
