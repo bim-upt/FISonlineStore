@@ -1,11 +1,16 @@
 package cs.upt.store.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import javax.naming.NameNotFoundException;
+import javax.swing.text.html.Option;
 
 import org.apache.coyote.BadRequestException;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import cs.upt.store.DTO.OrderDTO;
@@ -28,6 +33,8 @@ public class OrderService {
 
     @Autowired
     private ProductService productService;
+
+    
 
     public OrderDTO addOrder(OrderDTO order) throws NameNotFoundException, UserIsSellerException, NoEligibleProductsException{
         Order actual = new Order(order, productService);
@@ -55,6 +62,17 @@ public class OrderService {
         order.setStatus(true);
         order.setOid(actual.getOid());
         return order;
+    }
+
+    public List<Order> getBuyerOrder(String name) throws NotFoundException, UserIsSellerException{
+        Optional<HashedUser> user = hashedUserRepository.findById(name);
+        if(user.isEmpty()){
+            throw new NotFoundException();
+        }
+        if(user.get().getType() == 0){
+            return orderRepository.findByBuyer(name);
+        }
+        throw new UserIsSellerException("User is a seller");
     }
    
 }
