@@ -29,7 +29,7 @@ import jakarta.validation.Valid;
 @RequestMapping("/v1/products")
 public class ProductController {
     @Autowired
-    ProductService productService;
+    private ProductService productService;
     
     @PostMapping
     public ResponseEntity<ProductDTO> addUser(@Valid @RequestBody Product newProduct){

@@ -90,4 +90,8 @@ public class ProductService {
         }
         return result;
     }
+
+    public Product findByCodeAndSeller(String code, String seller){
+        return productRepository.findByCodeAndSeller(code, seller);
+    }
 }
