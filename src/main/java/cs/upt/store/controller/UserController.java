@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import cs.upt.store.DTO.HashedUserDTO;
+import cs.upt.store.exceptions.CardExistsException;
 import cs.upt.store.model.User;
 import cs.upt.store.service.UserService;
 import jakarta.validation.Valid;
@@ -32,6 +33,8 @@ public class UserController {
             return new ResponseEntity<>(new HashedUserDTO("New user registered", newUser.getName(), true, newUser.getType()), HttpStatus.CREATED);
         }catch(DataIntegrityViolationException e){
             return new ResponseEntity<>(new HashedUserDTO("User already exists", newUser.getName(), false, -1), HttpStatus.CONFLICT);
+        }catch(CardExistsException e){
+            return new ResponseEntity<>(new HashedUserDTO("Card alreay belongs to somebody else", newUser.getName(), false, -1), HttpStatus.CONFLICT);
         }catch(Exception e){
             System.err.println(e.getMessage());
             return new ResponseEntity<>(new HashedUserDTO("Server side error", newUser.getName(), false, -1), HttpStatus.INTERNAL_SERVER_ERROR);
