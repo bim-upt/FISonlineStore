@@ -1,6 +1,5 @@
 package cs.upt.store.controller;
 
-import java.math.BigDecimal;
 import java.security.NoSuchAlgorithmException;
 
 import javax.naming.NameNotFoundException;
@@ -11,19 +10,15 @@ import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import cs.upt.store.DTO.HashedCardDTO;
 import cs.upt.store.DTO.ProductDTO;
-import cs.upt.store.exceptions.InsufficientFundsException;
-import cs.upt.store.exceptions.NonExistentCardException;
 import cs.upt.store.exceptions.UserIsNotASellerException;
-import cs.upt.store.model.Card;
-import cs.upt.store.model.HashedCard;
 import cs.upt.store.model.Product;
 import cs.upt.store.service.ProductService;
 import jakarta.validation.Valid;
@@ -53,7 +48,7 @@ public class ProductController {
         }
     }
 
-    @PutMapping("modify")
+    @PutMapping("/modify")
     public ResponseEntity<ProductDTO> modifyProduct(@Valid @RequestBody Product newProduct){
         try{
             productService.modifyProduct(newProduct);
@@ -62,6 +57,17 @@ public class ProductController {
             return new ResponseEntity<>(new ProductDTO(newProduct, false, "Seller doesn't exist, or doesn't have a matching code product"), HttpStatus.NOT_FOUND);
         }catch(Exception e){
             return new ResponseEntity<>(new ProductDTO(newProduct, false, "Server-side error"), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<ProductDTO> deleteProduct(@RequestParam String code, @RequestParam String seller){
+        try{
+            return new ResponseEntity<>(new ProductDTO(productService.deleteProduct(code, seller), true, "Product deleted"), HttpStatus.OK);
+        }catch(NotFoundException e){
+            return new ResponseEntity<>(new ProductDTO("No product to delte has been found", false), HttpStatus.NOT_FOUND);
+        }catch(Exception e){
+            return new ResponseEntity<>(new ProductDTO("Server-side error", false), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 } 

@@ -1,7 +1,5 @@
 package cs.upt.store.DTO;
 
-import org.bson.types.ObjectId;
-
 import cs.upt.store.model.Product;
 
 
@@ -25,7 +23,10 @@ public class ProductDTO {
         this.message = message;
         this.code = product.getCode();
     }
-    
+    public ProductDTO(String message, boolean status){
+        this.message = message;
+        this.status = status;
+    }
 
  
 
