@@ -7,12 +7,15 @@ import javax.naming.NameNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException.NotFound;
 
 import cs.upt.store.DTO.HashedUserDTO;
 import cs.upt.store.exceptions.UserIsNotASellerException;
 import cs.upt.store.model.Product;
 import cs.upt.store.repository.ProductRepository;
+import jakarta.validation.constraints.Null;
 
 
 
@@ -43,5 +46,22 @@ public class ProductService {
         }catch(Exception e){
             throw e;
         }
+    }
+
+    public Product modifyProduct(Product product) throws NotFoundException{
+        List<Product> sellerProducts = productRepository.findBySeller(product.getSeller());
+        Product found = null;
+        for (int i = 0; i < sellerProducts.size(); i++) {
+            if(sellerProducts.get(i).getCode().equals(product.getCode())){
+                found = sellerProducts.get(i);
+                break;
+            }
+        }
+        if(found == null){
+            throw new NotFoundException();
+        }
+        found.setImgs(product.getImgs());
+        found.setName(product.getName());
+        return productRepository.save(found);
     }
 }
