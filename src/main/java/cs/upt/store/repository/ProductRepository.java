@@ -10,5 +10,5 @@ import cs.upt.store.model.Product;
 
 public interface ProductRepository extends MongoRepository<Product,ObjectId>{
     @Query("{ 'seller' : ?0 }")
-    List<Product> findByName(String name);
+    List<Product> findBySeller(String name);
 }

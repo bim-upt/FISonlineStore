@@ -5,6 +5,7 @@ import java.security.NoSuchAlgorithmException;
 import javax.naming.NameNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -32,11 +33,12 @@ public class ProductController {
     }catch(NoSuchAlgorithmException e){
         return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
     }catch(NameNotFoundException e){
-        return new ResponseEntity<>(new ProductDTO(newProduct, true, "No seller found"), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(new ProductDTO(newProduct, false, "No seller found"), HttpStatus.NOT_FOUND);
     }catch(UserIsNotASellerException e){
-        return new ResponseEntity<>(new ProductDTO(newProduct, true, "User is not a seller"), HttpStatus.BAD_REQUEST);
-    }
-    catch(Exception e){
+        return new ResponseEntity<>(new ProductDTO(newProduct, false, "User is not a seller"), HttpStatus.BAD_REQUEST);
+    }catch(DataIntegrityViolationException e){
+        return new ResponseEntity<>(new ProductDTO(newProduct, false, "Seller has a product with this code"), HttpStatus.CONFLICT);
+    }catch(Exception e){
         System.err.println(e.getMessage());
         return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
     }
