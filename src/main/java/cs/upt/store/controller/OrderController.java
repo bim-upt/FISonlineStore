@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import cs.upt.store.DTO.OrderDTO;
+import cs.upt.store.DTO.ProductSoldDTO;
 import cs.upt.store.exceptions.NoEligibleProductsException;
 import cs.upt.store.exceptions.UserIsSellerException;
 import cs.upt.store.model.Order;
@@ -60,9 +61,21 @@ public class OrderController {
     }
 
     @GetMapping("/buyer/{name}")
-    public ResponseEntity<List<Order>> getOrder(@PathVariable String name){
+    public ResponseEntity<List<Order>> getBuyerOrder(@PathVariable String name){
         try{
             return new ResponseEntity<>(orderService.getBuyerOrder(name), HttpStatus.FOUND);
+        }catch(UserIsSellerException e){
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }catch(Exception e){
+            System.out.println(e.getMessage());                             
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/seller/{name}")
+    public ResponseEntity<List<ProductSoldDTO>> getSellerOrder(@PathVariable String name){
+        try{
+            return new ResponseEntity<>(orderService.getSellerOrder(name), HttpStatus.FOUND);
         }catch(UserIsSellerException e){
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }catch(Exception e){

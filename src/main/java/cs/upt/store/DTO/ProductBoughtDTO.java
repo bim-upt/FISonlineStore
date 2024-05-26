@@ -7,8 +7,8 @@ public class ProductBoughtDTO {
     @NotEmpty(message = "Code mandatory")
     @NotNull(message = "Code mandatory")
     private String code;
-    @NotEmpty(message = "Code mandatory")
-    @NotNull(message = "Code mandatory")
+    @NotEmpty(message = "Buyer mandatory")
+    @NotNull(message = "Buyer mandatory")
     private String seller;
 
     private String message;
