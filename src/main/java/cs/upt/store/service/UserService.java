@@ -21,20 +21,20 @@ public class UserService {
     @Autowired
     private HashedUserRepository hashedUserRepository;
 
-    @Autowired
-    private HashedCardRepository hashedCardRepository;
+    // @Autowired
+    // private HashedCardRepository hashedCardRepository;
 
 
     public HashedUser insertUser(User user) throws NoSuchAlgorithmException, CardExistsException{
         try{
             HashedUser result = new HashedUser(user);
-            if(user.getCreditCard() != null){
-                if(hashedCardRepository.findByHash(result.getCreditCard()) != null){
-                    throw new CardExistsException("Card belongs to another user");
-                }else{
-                    hashedCardRepository.insert(new HashedCard(user.getCreditCard()));
-                }
-            }
+            // if(user.getCreditCard() != null){
+            //     if(hashedCardRepository.findByHash(result.getCreditCard()) != null){
+            //         throw new CardExistsException("Card belongs to another user");
+            //     }else{
+            //         hashedCardRepository.insert(new HashedCard(user.getCreditCard()));
+            //     }
+            // }
             return hashedUserRepository.insert(result);
         }catch(Exception e){
             throw e;

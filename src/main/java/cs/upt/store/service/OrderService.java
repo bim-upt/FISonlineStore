@@ -1,5 +1,6 @@
 package cs.upt.store.service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -16,12 +17,16 @@ import org.springframework.stereotype.Service;
 import cs.upt.store.DTO.OrderDTO;
 import cs.upt.store.DTO.ProductBoughtDTO;
 import cs.upt.store.DTO.ProductSoldDTO;
+import cs.upt.store.exceptions.InsufficientFundsException;
 import cs.upt.store.exceptions.NoEligibleProductsException;
+import cs.upt.store.exceptions.NonExistentCardException;
 import cs.upt.store.exceptions.UserIsNotASellerException;
 import cs.upt.store.exceptions.UserIsSellerException;
+import cs.upt.store.model.HashedCard;
 import cs.upt.store.model.HashedUser;
 import cs.upt.store.model.Order;
 import cs.upt.store.model.Product;
+import cs.upt.store.repository.HashedCardRepository;
 import cs.upt.store.repository.HashedUserRepository;
 import cs.upt.store.repository.OrderRepository;
 
@@ -36,14 +41,18 @@ public class OrderService {
     @Autowired
     private ProductService productService;
 
-    
+    @Autowired
+    private HashedCardRepository hashedCardRepository;
 
-    public OrderDTO addOrder(OrderDTO order) throws NameNotFoundException, UserIsSellerException, NoEligibleProductsException{
+    @Autowired
+    private CardService cardService;
+
+    public OrderDTO addOrder(OrderDTO order) throws NameNotFoundException, UserIsSellerException, NoEligibleProductsException, InsufficientFundsException, NonExistentCardException{
+        BigDecimal sum = new BigDecimal(0);
         Order actual = new Order(order, productService);
         if(actual.getProducts().isEmpty()){
             throw new NoEligibleProductsException("No products eligible to be bought");
         }
-        orderRepository.insert(actual);
         Optional<HashedUser> buyer = hashedUserRepository.findById(order.getBuyer());
         if(buyer.isEmpty()){
             throw new NameNotFoundException("Buyer not found");
@@ -54,6 +63,7 @@ public class OrderService {
         for(int i = 0; i < order.getProducts().size(); i++){
             Product current = productService.findByCodeAndSeller(order.getProducts().get(i).getCode(),order.getProducts().get(i).getSeller());
             if(current != null){
+                sum = sum.add(current.getPrice());
                 order.getProducts().get(i).setMessage("Product added successfully");
                 order.getProducts().get(i).setStatus(true);
             }else{
@@ -61,6 +71,17 @@ public class OrderService {
                 order.getProducts().get(i).setStatus(false);
             }
         }
+        HashedCard card = hashedCardRepository.findByHash(buyer.get().getCreditCard());
+        try{
+            cardService.updateCardByAmount(card, sum.negate());
+        }catch(InsufficientFundsException e){
+            throw e;
+        }catch(NonExistentCardException e){
+            throw e;
+        }catch(Exception e){
+            throw e;
+        }
+        orderRepository.insert(actual);
         order.setStatus(true);
         order.setOid(actual.getOid());
         return order;

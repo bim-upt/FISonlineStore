@@ -38,7 +38,7 @@ public class HashedUser {
             String stringToEncode = user.getPassword();
             this.password = digest.digest(stringToEncode.getBytes(StandardCharsets.UTF_8));
             this.type = user.getType();
-            if(user.getCreditCard()!= null){this.creditCard = (new HashedCard(user.getCreditCard())).getHash();}
+            //if(user.getCreditCard()!= null){this.creditCard = (new HashedCard(user.getCreditCard())).getHash();}
             this.name = user.getName();
         }catch(Exception e){
             throw e;
