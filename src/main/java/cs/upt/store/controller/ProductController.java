@@ -1,6 +1,7 @@
 package cs.upt.store.controller;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 import javax.naming.NameNotFoundException;
 
@@ -11,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -68,6 +70,16 @@ public class ProductController {
             return new ResponseEntity<>(new ProductDTO("No product to delte has been found", false), HttpStatus.NOT_FOUND);
         }catch(Exception e){
             return new ResponseEntity<>(new ProductDTO("Server-side error", false), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ProductDTO>> getProducts(){
+        try{
+            List<ProductDTO> products = productService.getProducts();
+            return new ResponseEntity<>(products, HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 } 
