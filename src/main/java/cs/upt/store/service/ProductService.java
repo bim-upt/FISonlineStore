@@ -9,13 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException.NotFound;
 
 import cs.upt.store.DTO.HashedUserDTO;
 import cs.upt.store.exceptions.UserIsNotASellerException;
 import cs.upt.store.model.Product;
 import cs.upt.store.repository.ProductRepository;
-import jakarta.validation.constraints.Null;
+
 
 
 

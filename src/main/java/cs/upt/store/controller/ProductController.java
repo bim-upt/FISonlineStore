@@ -1,6 +1,6 @@
 package cs.upt.store.controller;
 
-import java.math.BigDecimal;
+
 import java.security.NoSuchAlgorithmException;
 
 import javax.naming.NameNotFoundException;
@@ -15,15 +15,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import cs.upt.store.DTO.HashedCardDTO;
 import cs.upt.store.DTO.ProductDTO;
-import cs.upt.store.exceptions.InsufficientFundsException;
-import cs.upt.store.exceptions.NonExistentCardException;
 import cs.upt.store.exceptions.UserIsNotASellerException;
-import cs.upt.store.model.Card;
-import cs.upt.store.model.HashedCard;
 import cs.upt.store.model.Product;
 import cs.upt.store.service.ProductService;
 import jakarta.validation.Valid;

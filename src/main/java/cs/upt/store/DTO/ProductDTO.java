@@ -1,6 +1,5 @@
 package cs.upt.store.DTO;
 
-import org.bson.types.ObjectId;
 
 import cs.upt.store.model.Product;
 
