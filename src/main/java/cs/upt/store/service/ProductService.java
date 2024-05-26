@@ -62,6 +62,7 @@ public class ProductService {
         }
         found.setImgs(product.getImgs());
         found.setName(product.getName());
+        found.setPrice(product.getPrice());
         return productRepository.save(found);
     }
 

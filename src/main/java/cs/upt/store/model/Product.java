@@ -1,5 +1,7 @@
 package cs.upt.store.model;
 
+import java.math.BigDecimal;
+
 import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.data.annotation.Id;
@@ -9,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -34,18 +37,22 @@ public class Product{
     @NotNull(message = "Product must have a seller")
     private String seller;
 
-    
+    @Positive
+    @NotNull
+    private BigDecimal price;
 
-    public Product(ObjectId pid,
-            @NotEmpty(message = "Product must have a name") @NotNull(message = "Product must have a name") String name,
-            @URL(message = "Invalid url") @NotNull(message = "Product must have an image") @NotEmpty(message = "Product must have an sdfsdfsdfdsfds") String imgs,
-            @NotNull(message = "Product must have a code") @NotEmpty(message = "Product must have a code") String code,
-            @NotNull(message = "Product must have a seller") String seller) {
-        this.pid = pid;
-        this.name = name;
-        this.imgs = imgs;
-        this.code = code;
-        this.seller = seller;
+   
+
+    public Product(
+        @NotEmpty(message = "Product must have a name") @NotNull(message = "Product must have a name") String name,
+        @URL(message = "Invalid url") @NotNull(message = "Product must have an image") @NotEmpty(message = "Product must have an sdfsdfsdfdsfds") String imgs,
+        @NotNull(message = "Product must have a code") @NotEmpty(message = "Product must have a code") String code,
+        @NotNull(message = "Product must have a seller") String seller, @NotNull BigDecimal price) {
+    this.name = name;
+    this.imgs = imgs;
+    this.code = code;
+    this.seller = seller;
+    this.price = price;
     }
 
     public ObjectId getPid() {
@@ -89,6 +96,14 @@ public class Product{
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
     }
     
     
