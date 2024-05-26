@@ -17,7 +17,6 @@ import cs.upt.store.repository.ProductRepository;
 
 
 
-
 @Service
 public class ProductService {
     @Autowired
@@ -62,5 +61,21 @@ public class ProductService {
         found.setImgs(product.getImgs());
         found.setName(product.getName());
         return productRepository.save(found);
+    }
+
+    public Product deleteProduct(String code, String seller) throws NotFoundException{
+        Product found = null;
+        List<Product> sellerProducts = productRepository.findBySeller(seller);
+        for (int i = 0; i < sellerProducts.size(); i++) {
+            if(sellerProducts.get(i).getCode().equals(code)){
+                found = sellerProducts.get(i);
+                break;
+            }
+        }
+        if(found == null){
+            throw new NotFoundException();
+        }
+        productRepository.deleteById(found.getPid());
+        return found;
     }
 }
