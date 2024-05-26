@@ -10,5 +10,5 @@ import cs.upt.store.model.HashedCard;
 @Repository
 public interface HashedCardRepository extends MongoRepository<HashedCard, byte[]>{
     @Query("{ 'hash' : ?0 }")
-    HashedCard findByHash(byte[] hash);
+    public HashedCard findByHash(byte[] hash);
 }
