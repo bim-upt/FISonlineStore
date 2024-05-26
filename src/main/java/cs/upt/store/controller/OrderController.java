@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import cs.upt.store.DTO.OrderDTO;
+import cs.upt.store.exceptions.NoEligibleProductsException;
 import cs.upt.store.exceptions.UserIsSellerException;
 import cs.upt.store.service.OrderService;
 import jakarta.validation.Valid;
@@ -35,7 +36,12 @@ public class OrderController {
             orderDTO.setMessage("Not a buyer");
             orderDTO.setStatus(false);
             return new ResponseEntity<>(orderDTO, HttpStatus.INTERNAL_SERVER_ERROR);
-        }catch(Exception e){
+        }catch(NoEligibleProductsException e){
+            orderDTO.setMessage("No product was acceptable");
+            orderDTO.setStatus(false);
+            return new ResponseEntity<>(orderDTO, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        catch(Exception e){
             orderDTO.setMessage("Server-side error");
             orderDTO.setStatus(false);
             System.out.println(e.getMessage());                             

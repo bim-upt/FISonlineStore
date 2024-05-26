@@ -4,10 +4,12 @@ import java.util.Optional;
 
 import javax.naming.NameNotFoundException;
 
+import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cs.upt.store.DTO.OrderDTO;
+import cs.upt.store.exceptions.NoEligibleProductsException;
 import cs.upt.store.exceptions.UserIsNotASellerException;
 import cs.upt.store.exceptions.UserIsSellerException;
 import cs.upt.store.model.HashedUser;
@@ -27,8 +29,11 @@ public class OrderService {
     @Autowired
     private ProductService productService;
 
-    public OrderDTO addOrder(OrderDTO order) throws NameNotFoundException, UserIsSellerException{
+    public OrderDTO addOrder(OrderDTO order) throws NameNotFoundException, UserIsSellerException, NoEligibleProductsException{
         Order actual = new Order(order, productService);
+        if(actual.getProducts().isEmpty()){
+            throw new NoEligibleProductsException("No products eligible to be bought");
+        }
         orderRepository.insert(actual);
         Optional<HashedUser> buyer = hashedUserRepository.findById(order.getBuyer());
         if(buyer.isEmpty()){
