@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
+import cs.upt.store.DTO.HashedCardDTO;
+import cs.upt.store.DTO.HashedUserDTO;
 import cs.upt.store.model.HashedUser;
 import cs.upt.store.model.User;
 import cs.upt.store.service.UserService;
@@ -24,12 +25,12 @@ public class UserController {
     private UserService userService;
 
     @PostMapping
-    public ResponseEntity<HashedUser> addUser(@Valid @RequestBody User newUser){
+    public ResponseEntity<HashedUserDTO> addUser(@Valid @RequestBody User newUser){
         try{
             userService.insertUser(newUser);
-            return new ResponseEntity<>(null, HttpStatus.CREATED);
+            return new ResponseEntity<>(new HashedUserDTO("New user registered", newUser.getName(), true), HttpStatus.CREATED);
         }catch(DataIntegrityViolationException e){
-            return new ResponseEntity<>(null, HttpStatus.CONFLICT);
+            return new ResponseEntity<>(new HashedUserDTO("User already exists", newUser.getName(), false), HttpStatus.CONFLICT);
         }catch(NoSuchAlgorithmException e){
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }catch(Exception e){
