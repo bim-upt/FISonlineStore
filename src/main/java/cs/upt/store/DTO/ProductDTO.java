@@ -12,8 +12,9 @@ public class ProductDTO {
 
     private String imgs; //urls
 
+    private String code;
     private String seller;
-
+    
     private Boolean status;
     private String message;
     public ProductDTO(){}
@@ -24,6 +25,7 @@ public class ProductDTO {
         this.seller = product.getSeller();
         this.status = status;
         this.message = message;
+        this.code = product.getCode();
     }
     
 
@@ -74,5 +76,11 @@ public class ProductDTO {
         this.message = message;
     }
 
-    
+    public void setCode(String code){
+        this.code = code;
+    }
+
+    public String getCode(){
+        return code;
+    }
 }

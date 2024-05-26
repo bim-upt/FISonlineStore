@@ -4,13 +4,11 @@ import java.security.NoSuchAlgorithmException;
 
 import javax.naming.NameNotFoundException;
 
-import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cs.upt.store.DTO.HashedUserDTO;
 import cs.upt.store.exceptions.UserIsNotASellerException;
-import cs.upt.store.model.HashedUser;
 import cs.upt.store.model.Product;
 import cs.upt.store.repository.ProductRepository;
 
