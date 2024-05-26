@@ -15,13 +15,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import cs.upt.store.DTO.HashedCardDTO;
 import cs.upt.store.DTO.HashedUserDTO;
-import cs.upt.store.model.HashedUser;
 import cs.upt.store.model.User;
 import cs.upt.store.service.UserService;
 import jakarta.validation.Valid;
-import jakarta.websocket.server.PathParam;
 
 @Controller
 @RequestMapping("/v1/users")
@@ -35,12 +32,10 @@ public class UserController {
             userService.insertUser(newUser);
             return new ResponseEntity<>(new HashedUserDTO("New user registered", newUser.getName(), true, newUser.getType()), HttpStatus.CREATED);
         }catch(DataIntegrityViolationException e){
-            return new ResponseEntity<>(new HashedUserDTO("User already exists", newUser.getName(), false, newUser.getType()), HttpStatus.CONFLICT);
-        }catch(NoSuchAlgorithmException e){
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(new HashedUserDTO("User already exists", newUser.getName(), false, -1), HttpStatus.CONFLICT);
         }catch(Exception e){
             System.err.println(e.getMessage());
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(new HashedUserDTO("Server side error", newUser.getName(), false, -1), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -53,7 +48,7 @@ public class UserController {
             return new ResponseEntity<>(new HashedUserDTO("User not found", name, false, -1), HttpStatus.NOT_FOUND);
         }catch(Exception e){
             System.err.println(e.getMessage());
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(new HashedUserDTO("Server side error", name, false, -1), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
