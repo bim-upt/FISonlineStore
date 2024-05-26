@@ -4,11 +4,14 @@ public class HashedUserDTO {
     private String message;
     private boolean status;
     private String username;
-    public HashedUserDTO(String message, String username, boolean status){
+    private int type; //0 - normal, 1 = seller
+    public HashedUserDTO(String message, String username, boolean status, int type){
         this.message = message;
         this.status = status;
         this.username = username;
+        this.type = type;
     }
+    public HashedUserDTO(){}
     public String getMessage() {
         return message;
     }
@@ -26,6 +29,12 @@ public class HashedUserDTO {
     }
     public void setUsername(String username) {
         this.username = username;
+    }
+    public int getType() {
+        return type;
+    }
+    public void setType(int type) {
+        this.type = type;
     }
     
 }

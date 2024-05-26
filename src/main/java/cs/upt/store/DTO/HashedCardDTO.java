@@ -8,6 +8,7 @@ public class HashedCardDTO {
         this.message = message;
         this.status = status;
     }
+    public HashedCardDTO(){}
  
     public void setMessage(String message) {
         this.message = message;

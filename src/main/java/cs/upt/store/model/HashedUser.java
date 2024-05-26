@@ -43,5 +43,40 @@ public class HashedUser {
         }catch(Exception e){
             throw e;
         }
+    }
+
+    public HashedUser(){}
+
+    public String getName() {
+        return name;
+    }
+
+    public byte[] getPassword() {
+        return password;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public List<Card> getCreditCards() {
+        return creditCards;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPassword(byte[] password) {
+        this.password = password;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public void setCreditCards(List<Card> creditCards) {
+        this.creditCards = creditCards;
     }    
+    
 }
