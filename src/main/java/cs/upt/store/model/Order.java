@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import cs.upt.store.DTO.OrderDTO;
+import cs.upt.store.DTO.ProductBoughtDTO;
 import cs.upt.store.service.ProductService;
 import jakarta.validation.constraints.NotNull;
 
@@ -23,14 +24,13 @@ public class Order{
 	private ObjectId oid;
     
     @NotNull(message = "There must be products")
-    private List<ObjectId> products;
+    private List<ProductBoughtDTO> products;
 
     @NotNull(message = "There must be a buyer")
     private String buyer;
 
     @NotNull(message = "Order mustn't be in limbo")
-    @Range(min = 0, max = 1)
-    private int status;
+    private boolean finished;
 
     public ObjectId getOid() {
         return oid;
@@ -39,7 +39,7 @@ public class Order{
     public Order() {
     }
 
-    public Order(@NotNull(message = "There must be products") List<ObjectId> products,
+    public Order(@NotNull(message = "There must be products") List<ProductBoughtDTO> products,
             @NotNull(message = "There must be a buyer") String buyer) {
         this.products = products;
         this.buyer = buyer;
@@ -49,12 +49,12 @@ public class Order{
     public Order(OrderDTO order, ProductService productService){
         this.oid = order.getOid();
         this.buyer = order.getBuyer();
-        this.status = 1;
-        this.products = new ArrayList<ObjectId>();
+        this.finished = false;
+        this.products = new ArrayList<ProductBoughtDTO>();
         for(int i = 0; i < order.getProducts().size(); i++){
             Product current = productService.findByCodeAndSeller(order.getProducts().get(i).getCode(),order.getProducts().get(i).getSeller());
             if(current != null){
-                products.add(current.getPid());
+                products.add(new ProductBoughtDTO(current.getCode(), current.getSeller()));
             }
         }
     }
@@ -63,7 +63,7 @@ public class Order{
         this.oid = oid;
     }
 
-    public void setProducts(List<ObjectId> products) {
+    public void setProducts(List<ProductBoughtDTO> products) {
         this.products = products;
     }
 
@@ -71,12 +71,20 @@ public class Order{
         this.buyer = buyer;
     }
 
-    public List<ObjectId> getProducts() {
+    public List<ProductBoughtDTO> getProducts() {
         return products;
     }
 
     public String getBuyer() {
         return buyer;
+    }
+
+    public boolean isStatus() {
+        return finished;
+    }
+
+    public void setFinished(boolean finished) {
+        this.finished = finished;
     }
     
 }
