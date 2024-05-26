@@ -20,7 +20,10 @@ import jakarta.validation.constraints.NotNull;
 public class HashedUser {
     @Id
     @NotNull
-    private byte[] hash;
+    private String name;
+
+    @NotNull
+    private byte[] password;
     
     @NotNull(message = "User type is mandatory")
     @Range(min = 0, max = 1, message = "Unkown user type")
@@ -32,10 +35,11 @@ public class HashedUser {
     public HashedUser(User user) throws NoSuchAlgorithmException{
         try{
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            String stringToEncode = user.getName()+user.getPassword();
-            this.hash = digest.digest(stringToEncode.getBytes(StandardCharsets.UTF_8));
+            String stringToEncode = user.getPassword();
+            this.password = digest.digest(stringToEncode.getBytes(StandardCharsets.UTF_8));
             this.type = user.getType();
             this.creditCards = user.getCreditCards();
+            this.name = user.getName();
         }catch(Exception e){
             throw e;
         }

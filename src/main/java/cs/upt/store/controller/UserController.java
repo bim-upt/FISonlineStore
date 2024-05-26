@@ -11,8 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import cs.upt.store.model.Card;
-import cs.upt.store.model.HashedCard;
+
 import cs.upt.store.model.HashedUser;
 import cs.upt.store.model.User;
 import cs.upt.store.service.UserService;
