@@ -32,7 +32,7 @@ public class CardController {
     public ResponseEntity<HashedCard> addCard(@Valid @RequestBody Card newCard){
         try{
             HashedCard cardSaved = cardService.insertCard(newCard);
-            return new ResponseEntity<>(cardSaved, HttpStatus.CREATED);
+            return new ResponseEntity<>(null, HttpStatus.CREATED);
         }catch(DataIntegrityViolationException e){
             return new ResponseEntity<>(null, HttpStatus.CONFLICT);
         }catch(NoSuchAlgorithmException e){
