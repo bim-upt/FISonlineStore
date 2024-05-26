@@ -51,10 +51,11 @@ public class CardService {
     }
 
     public void updateCardByAmount(HashedCard card, BigDecimal amount) throws InsufficientFundsException, NonExistentCardException{
-        HashedCard existingCard = hashedCardRepository.findByHash(card.getHash());
-        if(existingCard == null){
+        if(card == null){
             throw new NonExistentCardException();
         }
+        HashedCard existingCard = hashedCardRepository.findByHash(card.getHash());
+        
     
         //System.out.print(existingCard.getHash().toString() + '\n');
         //System.out.print(existingCard.getAmount().toString() + '\n');
