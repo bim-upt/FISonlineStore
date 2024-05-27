@@ -5,7 +5,6 @@ import java.util.List;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 
-import cs.upt.store.model.Order;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
