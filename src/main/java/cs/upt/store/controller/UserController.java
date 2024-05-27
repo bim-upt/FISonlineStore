@@ -15,11 +15,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import cs.upt.store.DTO.HashedUserDTO;
 import cs.upt.store.DTO.HistoryDTO;
 import cs.upt.store.DTO.ProductBoughtDTO;
+import cs.upt.store.DTO.StatsDTO;
 import cs.upt.store.exceptions.CardExistsException;
+import cs.upt.store.exceptions.UserIsNotASellerException;
 import cs.upt.store.exceptions.UserIsSellerException;
 import cs.upt.store.model.User;
 import cs.upt.store.service.UserService;
@@ -88,6 +91,20 @@ public class UserController {
         }catch(Exception e){
             System.err.println(e.getMessage());
             return new ResponseEntity<>(new HistoryDTO(null, "Server-side error",false), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("{name}/getProductStats")
+    public ResponseEntity<StatsDTO> getProductStats(@PathVariable String name, @RequestParam(required = true) String code){
+        try{
+            return new ResponseEntity<>(userService.getProductStats(name, code), HttpStatus.OK);
+        }catch(NameNotFoundException e){
+            return new ResponseEntity<>(new StatsDTO(0,0, e.getMessage(),false), HttpStatus.NOT_FOUND);
+        }catch(UserIsNotASellerException e){
+            return new ResponseEntity<>(new StatsDTO(0,0, e.getMessage(),false), HttpStatus.BAD_REQUEST);
+        }catch(Exception e){
+            System.err.println(e.getMessage());
+            return new ResponseEntity<>(new StatsDTO(0,0, e.getMessage(),false), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
