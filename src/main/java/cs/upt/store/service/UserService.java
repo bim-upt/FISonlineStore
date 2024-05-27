@@ -2,6 +2,7 @@ package cs.upt.store.service;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import javax.naming.NameNotFoundException;
@@ -77,5 +78,16 @@ public class UserService {
         user.get().getHistory().add(productBoughtDTO);
         hashedUserRepository.save(user.get());
         return productBoughtDTO;
+    }
+
+    public List<ProductBoughtDTO> getHistory(String name) throws NameNotFoundException, UserIsSellerException{
+        Optional<HashedUser> user = hashedUserRepository.findById(name);
+        if(user.isEmpty()){
+            throw new NameNotFoundException("User has not been found");
+        }
+        if(user.get().getType() == 1){
+            throw new UserIsSellerException("Sellers have no history");
+        }
+        return user.get().getHistory();
     }
 }

@@ -1,6 +1,8 @@
 package cs.upt.store.controller;
 
 
+import java.util.List;
+
 import javax.naming.NameNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import cs.upt.store.DTO.HashedUserDTO;
+import cs.upt.store.DTO.HistoryDTO;
 import cs.upt.store.DTO.ProductBoughtDTO;
 import cs.upt.store.exceptions.CardExistsException;
 import cs.upt.store.exceptions.UserIsSellerException;
@@ -62,7 +65,7 @@ public class UserController {
         }catch(NameNotFoundException e){
             productBoughtDTO.setMessage(e.getMessage());
             productBoughtDTO.setStatus(false);
-            return new ResponseEntity<>(productBoughtDTO, HttpStatus.CREATED);
+            return new ResponseEntity<>(productBoughtDTO, HttpStatus.NOT_FOUND);
         }catch(UserIsSellerException e){
             productBoughtDTO.setMessage("Sellers have no history");
             productBoughtDTO.setStatus(false);
@@ -72,6 +75,19 @@ public class UserController {
             productBoughtDTO.setStatus(false);
             System.err.println(e.getMessage());
             return new ResponseEntity<>(productBoughtDTO, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @GetMapping("getHistory/{name}")
+    public ResponseEntity<HistoryDTO> getHistory(@PathVariable String name){
+        try{
+            return new ResponseEntity<>(new HistoryDTO(userService.getHistory(name), "Successful",true), HttpStatus.CREATED);
+        }catch(NameNotFoundException e){
+            return new ResponseEntity<>(new HistoryDTO(null, e.getMessage(),false), HttpStatus.NOT_FOUND);
+        }catch(UserIsSellerException e){
+            return new ResponseEntity<>(new HistoryDTO(null, e.getMessage(),false), HttpStatus.BAD_REQUEST);
+        }catch(Exception e){
+            System.err.println(e.getMessage());
+            return new ResponseEntity<>(new HistoryDTO(null, "Server-side error",false), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
