@@ -65,5 +65,14 @@ public class User{
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public User(
+            @NotEmpty(message = "Username is mandatory") @NotNull(message = "Username is mandatory") @NotBlank(message = "Username is mandatory") String name,
+            @NotNull(message = "User type is mandatory") @Range(min = 0, max = 1, message = "Unkown user type") int type,
+            @Length(min = 6, message = "Password too short!") @NotEmpty(message = "Password is mandatory") @NotNull(message = "Password is mandatory") @NotBlank(message = "Password is mandatory") String password) {
+        this.name = name;
+        this.type = type;
+        this.password = password;
+    }
     
 }
