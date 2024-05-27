@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import cs.upt.store.DTO.HashedUserDTO;
+import cs.upt.store.DTO.ProductBoughtDTO;
 import cs.upt.store.exceptions.CardExistsException;
+import cs.upt.store.exceptions.UserIsSellerException;
 import cs.upt.store.model.User;
 import cs.upt.store.service.UserService;
 import jakarta.validation.Valid;
@@ -51,6 +53,25 @@ public class UserController {
         }catch(Exception e){
             System.err.println(e.getMessage());
             return new ResponseEntity<>(new HashedUserDTO("Server side error", name, false, -1), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @PostMapping("addHistory/{name}")
+    public ResponseEntity<ProductBoughtDTO> addToHistory(@PathVariable String name, @RequestBody ProductBoughtDTO productBoughtDTO){
+        try{
+            return new ResponseEntity<>(userService.addToHistory(name, productBoughtDTO), HttpStatus.CREATED);
+        }catch(NameNotFoundException e){
+            productBoughtDTO.setMessage(e.getMessage());
+            productBoughtDTO.setStatus(false);
+            return new ResponseEntity<>(productBoughtDTO, HttpStatus.CREATED);
+        }catch(UserIsSellerException e){
+            productBoughtDTO.setMessage("Sellers have no history");
+            productBoughtDTO.setStatus(false);
+            return new ResponseEntity<>(productBoughtDTO, HttpStatus.BAD_REQUEST);
+        }catch(Exception e){
+            productBoughtDTO.setMessage("Server-side error");
+            productBoughtDTO.setStatus(false);
+            System.err.println(e.getMessage());
+            return new ResponseEntity<>(productBoughtDTO, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
