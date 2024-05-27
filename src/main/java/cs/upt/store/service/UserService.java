@@ -10,6 +10,7 @@ import javax.naming.NameNotFoundException;
 import javax.security.auth.login.LoginException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import cs.upt.store.DTO.HashedUserDTO;
@@ -41,7 +42,7 @@ public class UserService {
     private HashedCardRepository hashedCardRepository;
 
 
-    public HashedUser insertUser(User user) throws NoSuchAlgorithmException, CardExistsException{
+    public HashedUser insertUser(User user) throws NoSuchAlgorithmException, DataIntegrityViolationException{
         try{
             HashedUser result = new HashedUser(user);
             // if(user.getCreditCard() != null){
@@ -51,6 +52,9 @@ public class UserService {
             //         hashedCardRepository.insert(new HashedCard(user.getCreditCard()));
             //     }
             // }
+            if(hashedUserRepository.findById(user.getName()) != null){
+                throw new DataIntegrityViolationException("User already exists");
+            }
             return hashedUserRepository.insert(result);
         }catch(Exception e){
             throw e;

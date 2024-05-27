@@ -15,7 +15,7 @@ public class HashedUserDTO {
     public String getMessage() {
         return message;
     }
-    public boolean isStatus() {
+    public boolean getStatus() {
         return status;
     }
     public String getUsername() {
