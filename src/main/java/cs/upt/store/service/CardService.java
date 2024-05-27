@@ -9,6 +9,7 @@ import javax.naming.NameNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import cs.upt.store.DTO.HashedCardDTO;
 import cs.upt.store.exceptions.InsufficientFundsException;
 import cs.upt.store.exceptions.NonExistentCardException;
 import cs.upt.store.model.Card;
@@ -40,6 +41,17 @@ public class CardService {
         }catch(Exception e){
             throw e;
         }
+    }
+
+    public HashedCardDTO deleteCard(Card card) throws Exception{
+        HashedCard hashedCard = null;
+        try{
+            hashedCard = new HashedCard(card);
+        }catch(Exception e){
+            throw e;
+        }
+        hashedCardRepository.delete(hashedCard);
+        return new HashedCardDTO("Success", true);
     }
 
     public HashedCard saveHashedCard(HashedCard card) throws NoSuchAlgorithmException{
