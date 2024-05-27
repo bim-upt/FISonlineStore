@@ -1,49 +1,43 @@
-import './App.css';
+import '.App.css';
 import api from './api/axiosConfig';
-import {useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import layout from './components/Layout'; 
+import {Routes, Route} from 'react-router-dom';
 
-function App() { 
-  const [products, setProducts] = useState([]); 
+function ProductList() {
+  const [products, setProducts] = useState([]);
 
-  const getProducts = async () => {  
-    
-    try { 
-      const response = await api.get("/v1/products"); 
-
-      console.log("API response: ", response.data);
-      
-      setProducts(response.data); 
-
-    } catch (error) { 
-      console.log(error); 
+  useEffect(() => {
+    async function fetchProducts() {
+      try {
+        const response = await axios.get('/api/products'); // Aici trebuie să fie adresa corectă a endpoint-ului care returnează produsele
+        setProducts(response.data);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
     }
 
-  }
-
-  useEffect(() => { 
-    getProducts(); 
+    fetchProducts();
   }, []);
 
   return (
-    <div className="App">
-    <h1>Products</h1>
-    <div>
-      {products.length > 0 ? (
-        products.map((product, index) => {
-          return (
-            <div key={index}>
-              <h3>{product.name}</h3>
-              <p>{product.description}</p>
-              <p>{product.price}</p>
-            </div>
-          );
-        })
-      ) : (
-        <p>No products available.</p>
-      )}
+    <div> 
+      
+      <h1>Product List</h1>
+      <ul>
+        {products.map((product, index) => (
+          <li key={index}>
+            <h2>{product.name}</h2>
+            <img src={product.imgs} alt={product.name} />
+            <p>Seller: {product.seller}</p>
+            <p>Price: {product.price}</p>
+            <p>Status: {product.status ? 'Available' : 'Out of stock'}</p>
+            <p>Message: {product.message}</p>
+          </li>
+        ))}
+      </ul>
     </div>
-  </div>
-);
+  );
 }
 
-export default App;
+export default ProductList;
