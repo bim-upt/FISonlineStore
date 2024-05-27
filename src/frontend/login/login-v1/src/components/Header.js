@@ -4,6 +4,8 @@ import Container from 'react-bootstrap/Container';
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { NavLink } from "react-router-dom";
+import axiosInstance from './axiosConfig'; // Importul instanței Axios
+
 import "./HeaderStyle.css";
 
 const Header = () => {
@@ -19,11 +21,11 @@ const Header = () => {
             let response;
             switch (action) {
                 case 'getAllProducts':
-                    response = await axios.get('/v1/products');
+                    response = await axiosInstance.get('/v1/products');
                     setMessage(JSON.stringify(response.data));
                     break;
                 case 'addProduct':
-                    response = await axios.post('/v1/products', {
+                    response = await axiosInstance.post('/v1/products', {
                         name: "Product Name",
                         imgs: "Image URL",
                         seller: "Seller Name",
@@ -33,21 +35,26 @@ const Header = () => {
                     setMessage(JSON.stringify(response.data));
                     break;
                 case 'modifyProduct':
-                    response = await axios.put('/v1/modify', {
+                    response = await axiosInstance.put('/v1/products/modify', {
+                        code: "Product Code",
                         name: "Modified Product Name",
                         imgs: "Modified Image URL",
                         seller: "Modified Seller Name",
-                        code: "Product Code",
                         price: 20 // Modified product price
                     });
                     setMessage(JSON.stringify(response.data));
                     break;
                 case 'deleteProduct':
-                    response = await axios.delete(`/v1/products/delete?code=ProductCode&seller=SellerName`);
+                    response = await axiosInstance.delete('/v1/products/delete', {
+                        data: {
+                            code: "Product Code",
+                            seller: "Seller Name"
+                        }
+                    });
                     setMessage(JSON.stringify(response.data));
                     break;
                 case 'addCard':
-                    response = await axios.post('/v1/cards', {
+                    response = await axiosInstance.post('/v1/cards', {
                         number: "Card Number",
                         expDate: "YYYY-MM",
                         cvv: "CVV",
@@ -57,44 +64,38 @@ const Header = () => {
                     setMessage(JSON.stringify(response.data));
                     break;
                 case 'addFundsToCard':
-                    response = await axios.put('/v1/cards/addAmount?amount=100', {
+                    response = await axiosInstance.put('/v1/cards/addFunds', {
                         number: "Card Number",
-                        expDate: "YYYY-MM",
-                        cvv: "CVV",
-                        amount: 100, // Amount to be added/subtracted
-                        owner: "Card Owner"
+                        amount: 100 // Amount to be added
                     });
                     setMessage(JSON.stringify(response.data));
                     break;
                 case 'deleteCard':
-                    response = await axios.delete('/v1/cards/delete', {
+                    response = await axiosInstance.delete('/v1/cards/delete', {
                         data: {
                             number: "Card Number",
-                            expDate: "YYYY-MM",
-                            cvv: "CVV",
-                            amount: 100, // Card amount
                             owner: "Card Owner"
                         }
                     });
                     setMessage(JSON.stringify(response.data));
                     break;
                 case 'placeOrder':
-                    response = await axios.post('/v1/orders/place', {
-                        products: [{ code: "ProductCode", seller: "SellerName", message: "Additional information", status: true }],
-                        buyer: "BuyerName"
+                    response = await axiosInstance.post('/v1/orders/place', {
+                        products: [{ code: "Product Code", quantity: 1 }], // Product code and quantity
+                        buyer: "Buyer Name"
                     });
                     setMessage(JSON.stringify(response.data));
                     break;
                 case 'getBuyerOrders':
-                    response = await axios.get(`/v1/orders/buyer/BuyerName`);
+                    response = await axiosInstance.get(`/v1/orders/buyer/BuyerName`);
                     setMessage(JSON.stringify(response.data));
                     break;
                 case 'getSellerOrders':
-                    response = await axios.get(`/v1/orders/seller/SellerName`);
+                    response = await axiosInstance.get(`/v1/orders/seller/SellerName`);
                     setMessage(JSON.stringify(response.data));
                     break;
                 case 'addUser':
-                    response = await axios.post('/v1/users', {
+                    response = await axiosInstance.post('/v1/users', {
                         name: "Username",
                         password: "Password",
                         type: 0 // 0 for buyer, 1 for seller
@@ -102,34 +103,33 @@ const Header = () => {
                     setMessage(JSON.stringify(response.data));
                     break;
                 case 'getUserInfo':
-                    response = await axios.get(`/v1/users/Username`);
+                    response = await axiosInstance.get(`/v1/users/Username`);
                     setMessage(JSON.stringify(response.data));
                     break;
                 case 'addToUserHistory':
-                    response = await axios.post(`/v1/users/addHistory/Username`, {
-                        code: "ProductCode",
-                        seller: "SellerName"
+                    response = await axiosInstance.post(`/v1/users/Username/addHistory`, {
+                        code: "Product Code",
+                        seller: "Seller Name"
                     });
                     setMessage(JSON.stringify(response.data));
                     break;
                 case 'getUserHistory':
-                    response = await axios.get(`/v1/users/getHistory/Username`);
+                    response = await axiosInstance.get(`/v1/users/Username/history`);
                     setMessage(JSON.stringify(response.data));
                     break;
                 case 'getProductStats':
-                    response = await axios.get(`/v1/users/Username/getProductStats?code=ProductCode`);
+                    response = await axiosInstance.get(`/v1/products/stats?code=ProductCode`);
                     setMessage(JSON.stringify(response.data));
                     break;
                 case 'getUserStats':
-                    response = await axios.get(`/v1/users/Username/getStats`);
+                    response = await axiosInstance.get(`/v1/users/Username/stats`);
                     setMessage(JSON.stringify(response.data));
                     break;
                 case 'deleteUser':
-                    response = await axios.delete('/v1/users/delete', {
+                    response = await axiosInstance.delete('/v1/users/delete', {
                         data: {
                             name: "Username",
-                            password: "Password",
-                            type: 0 // 0 for buyer, 1 for seller
+                            password: "Password"
                         }
                     });
                     setMessage(JSON.stringify(response.data));
