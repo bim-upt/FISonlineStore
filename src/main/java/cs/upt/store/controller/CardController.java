@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -57,4 +58,15 @@ public class CardController {
             return new ResponseEntity<>(new HashedCardDTO("Server-side error", false), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @DeleteMapping("delete")
+    public ResponseEntity<HashedCardDTO> deleteCard(@Valid @RequestBody Card newCard){
+        try{
+            return new ResponseEntity<>(cardService.deleteCard(newCard), HttpStatus.OK);
+        }catch(Exception e){
+            System.err.println(e.getMessage());
+            return new ResponseEntity<>(new HashedCardDTO("Server side error", false), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    } 
+
 }

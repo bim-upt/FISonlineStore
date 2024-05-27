@@ -3,12 +3,14 @@ package cs.upt.store.controller;
 
 
 import javax.naming.NameNotFoundException;
+import javax.security.auth.login.LoginException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -119,6 +121,18 @@ public class UserController {
         }catch(Exception e){
             System.err.println(e.getMessage());
             return new ResponseEntity<>(new StatsDTO(0,0, e.getMessage(),false), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<HashedUserDTO> deleteUser(@Valid @RequestBody User newUser){
+        try{
+            return new ResponseEntity<>(userService.deleteUser(newUser), HttpStatus.CREATED);
+        }catch(LoginException e){
+            return new ResponseEntity<>(new HashedUserDTO(e.getMessage(), newUser.getName(), false, -1), HttpStatus.BAD_REQUEST);
+        }catch(Exception e){
+            System.err.println(e.getMessage());
+            return new ResponseEntity<>(new HashedUserDTO("Server side error", newUser.getName(), false, -1), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
