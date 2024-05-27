@@ -27,6 +27,7 @@ import cs.upt.store.model.User;
 import cs.upt.store.service.UserService;
 import jakarta.validation.Valid;
 
+
 @Controller
 @RequestMapping("/v1/users")
 public class UserController {
