@@ -117,7 +117,10 @@ public class OrderService {
             }
         }
         return sold;
+    }
 
+    public void deleteOrder(ObjectId oid){
+        orderRepository.deleteById(oid);
     }
    
 }

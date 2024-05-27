@@ -54,11 +54,12 @@ public class Card{
     private String owner;
 
     public Card(){}
-    public Card(String number, YearMonth expDate, String cvv, BigDecimal amount) {
+    public Card(String number, YearMonth expDate, String cvv, BigDecimal amount, String owner) {
         this.number = number;
         this.expDate = expDate;
         this.cvv = cvv;
         this.amount = amount;
+        this.owner = owner;
     }
 
     public String getNumber() {
