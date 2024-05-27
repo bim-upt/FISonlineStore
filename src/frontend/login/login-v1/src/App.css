@@ -35,4 +35,27 @@
   to {
     transform: rotate(360deg);
   }
+} 
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
+*{ 
+  box-sizing: border-box;
+  font-family: 'Quicksand', Arial, Helvetica, sans-serif;
+} 
+body { 
+  padding: 0; 
+  margin: 0;
+}
+.App {
+  display: flex;
+  justify-content: column; 
+  align-items: right;
+  height: 150vh;
+  background-color: rgb(190, 233, 182); 
+  margin-top: 7px; 
+  margin-left: 7px; 
+  margin-right: 7px;
+  padding: 7px;  
+  color: rgb(64, 63, 63);
 }

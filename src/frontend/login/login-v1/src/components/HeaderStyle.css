@@ -1,0 +1,21 @@
+/* headerStyles.css */
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; /* Modificare a alinierii verticale */
+    padding: 10px;
+    background-color: #333; /* sau altă culoare dorită pentru fundal */
+}
+  
+.menu-button {
+    background-color: transparent;
+    border: 2px solid; /* Specificare grosime border */
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+  
+.menu-button:hover {
+    text-decoration: underline;
+}
