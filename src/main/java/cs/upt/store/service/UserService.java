@@ -41,7 +41,7 @@ public class UserService {
     private HashedCardRepository hashedCardRepository;
 
 
-    public HashedUser insertUser(User user) throws NoSuchAlgorithmException, CardExistsException{
+    public HashedUser insertUser(User user) throws NoSuchAlgorithmException{
         try{
             HashedUser result = new HashedUser(user);
             // if(user.getCreditCard() != null){
