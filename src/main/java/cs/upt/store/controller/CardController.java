@@ -1,7 +1,6 @@
 package cs.upt.store.controller;
 
 import java.math.BigDecimal;
-import java.security.NoSuchAlgorithmException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -36,30 +35,26 @@ public class CardController {
             return new ResponseEntity<>(new HashedCardDTO("Card added", true), HttpStatus.CREATED);
         }catch(DataIntegrityViolationException e){
             return new ResponseEntity<>(new HashedCardDTO("Card already exists", false), HttpStatus.CONFLICT);
-        }catch(NoSuchAlgorithmException e){
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }catch(Exception e){
             System.err.println(e.getMessage());
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(new HashedCardDTO("Server side error", false), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     } 
 
-    @PutMapping("add")
+    @PutMapping("addAmount")
     public ResponseEntity<HashedCardDTO> addToCardAmount(@RequestParam(required = true) BigDecimal amount, @Valid @RequestBody Card updatedCard){
         try{
             HashedCard resultingCard = new HashedCard(updatedCard);
             cardService.updateCardByAmount(resultingCard, amount);
             cardService.saveHashedCard(resultingCard);
             return new ResponseEntity<>(new HashedCardDTO("Transaction successful", true), HttpStatus.OK);
-        }catch(NoSuchAlgorithmException e){
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }catch(InsufficientFundsException e){
             return new ResponseEntity<>(new HashedCardDTO("Funds too low for transaction", false), HttpStatus.PAYMENT_REQUIRED);
         }catch(NonExistentCardException e){
             return new ResponseEntity<>(new HashedCardDTO("Card not found", false), HttpStatus.NOT_FOUND);
         }catch(Exception e){
             System.err.println(e.getMessage());
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(new HashedCardDTO("Server-side error", false), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

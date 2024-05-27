@@ -4,7 +4,6 @@ package cs.upt.store.model;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -12,7 +11,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
-import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class User{
@@ -26,8 +24,7 @@ public class User{
     @Range(min = 0, max = 1, message = "Unkown user type")
     private int type; //0 - normal, 1 - seller
     
-    @DocumentReference
-    private List<Card> creditCards;
+    private Card creditCard;
     
     @Length(min = 6, message = "Password too short!")
     @NotEmpty(message = "Password is mandatory")
@@ -45,8 +42,8 @@ public class User{
         return type;
     }
 
-    public List<Card> getCreditCards() {
-        return creditCards;
+    public Card getCreditCard() {
+        return creditCard;
     }
 
     public String getPassword() {
@@ -61,8 +58,8 @@ public class User{
         this.type = type;
     }
 
-    public void setCreditCards(List<Card> creditCards) {
-        this.creditCards = creditCards;
+    public void setCreditCard(Card creditCard) {
+        this.creditCard = creditCard;
     }
 
     public void setPassword(String password) {

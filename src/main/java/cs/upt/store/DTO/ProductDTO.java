@@ -1,35 +1,37 @@
 package cs.upt.store.DTO;
 
-import org.bson.types.ObjectId;
+import java.math.BigDecimal;
 
 import cs.upt.store.model.Product;
 
 
 public class ProductDTO {
-	private ObjectId pid;
     
     private String name;
 
     private String imgs; //urls
 
+    private String code;
     private String seller;
-
+    private BigDecimal price;
     private Boolean status;
     private String message;
     public ProductDTO(){}
     public ProductDTO(Product product, boolean status, String message){
         this.imgs = product.getImgs();
+        this.price = product.getPrice();
         this.name = product.getName();
-        this.pid = product.getPid();
         this.seller = product.getSeller();
         this.status = status;
         this.message = message;
+        this.code = product.getCode();
     }
-    
+    public ProductDTO(String message, boolean status){
+        this.message = message;
+        this.status = status;
+    }
 
-    public ObjectId getPid() {
-        return pid;
-    }
+ 
 
     public String getName() {
         return name;
@@ -43,9 +45,7 @@ public class ProductDTO {
         return seller;
     }
 
-    public void setPid(ObjectId pid) {
-        this.pid = pid;
-    }
+
 
     public void setName(String name) {
         this.name = name;
@@ -74,5 +74,17 @@ public class ProductDTO {
         this.message = message;
     }
 
-    
+    public void setCode(String code){
+        this.code = code;
+    }
+
+    public String getCode(){
+        return code;
+    }
+    public BigDecimal getPrice() {
+        return price;
+    }
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
 }
