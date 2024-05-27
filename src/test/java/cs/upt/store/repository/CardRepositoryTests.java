@@ -24,11 +24,13 @@ import cs.upt.store.model.Card;
 import cs.upt.store.model.HashedCard;
 import cs.upt.store.model.HashedUser;
 import cs.upt.store.model.User;
+import cs.upt.store.repository.HashedCardRepository;
+import cs.upt.store.repository.HashedUserRepository;
 import cs.upt.store.service.UserService;
 
 
 @SpringBootTest
-public class CardRepositoryTest {
+public class CardRepositoryTests {
     @Autowired
     private HashedCardRepository hashedCardRepository;
 
@@ -43,7 +45,7 @@ public class CardRepositoryTest {
     @Before
     public void setup(){
         try{
-            hashedUser = new HashedUser(new User("testNameNobodyWouldChoose", 0, "test2"));
+            hashedUser = new HashedUser(new User("testNameNobodyWouldChoose", 0, "test2test2"));
             hashedUserRepository.insert(hashedUser);
         }catch(NoSuchAlgorithmException e){
             fail("User Insertion failed: " + e.getMessage());
@@ -53,7 +55,7 @@ public class CardRepositoryTest {
     @After
     public void teardown(){
         try{
-            userService.deleteUser(new User("testNameNobodyWouldChoose", 0, "test2"));
+            userService.deleteUser(new User("testNameNobodyWouldChoose", 0, "test2test2"));
         }catch(Exception e){
             fail("User Deletion failed: " + e.getMessage());
         }
@@ -64,7 +66,7 @@ public class CardRepositoryTest {
 
         //setup
         
-        Card card = new Card("12345678929", YearMonth.parse("2029-05", DateTimeFormatter.ofPattern("yyyy-MM")), "123", new BigDecimal(1000), "test");
+        Card card = new Card("12345678929", YearMonth.parse("2029-05", DateTimeFormatter.ofPattern("yyyy-MM")), "123", new BigDecimal(1000), "testNameNobodyWouldChoose");
         HashedCard hashedCard = null;
         try{
             hashedCard = new HashedCard(card);
