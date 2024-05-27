@@ -22,7 +22,11 @@ function ProductList() {
 
   return (
     <div> 
-      
+      <Routes> 
+        <Route path="/" element={<Layout />} />
+          
+      </Routes>
+
       <h1>Product List</h1>
       <ul>
         {products.map((product, index) => (
