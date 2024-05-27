@@ -12,7 +12,7 @@ import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-
+import cs.upt.store.DTO.ProductBoughtDTO;
 import jakarta.validation.constraints.NotNull;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -31,6 +31,8 @@ public class HashedUser {
     
     @NotNull(message = "With what money you gonna buy stuff")
     private byte[] creditCard;
+
+    private List<ProductBoughtDTO> history;
 
     public HashedUser(User user) throws NoSuchAlgorithmException{
         try{
@@ -77,6 +79,14 @@ public class HashedUser {
 
     public void setCreditCard(byte[] creditCard) {
         this.creditCard = creditCard;
+    }
+
+    public List<ProductBoughtDTO> getHistory() {
+        return history;
+    }
+
+    public void setHistory(List<ProductBoughtDTO> history) {
+        this.history = history;
     }    
     
 }
