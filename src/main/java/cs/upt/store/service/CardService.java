@@ -50,6 +50,11 @@ public class CardService {
         }catch(Exception e){
             throw e;
         }
+        Optional<HashedUser> user = hashedUserRepository.findById(hashedCard.getOwner());
+        if(user.isPresent()){
+            user.get().setCreditCard(null);
+            hashedUserRepository.save(user.get());
+        }
         hashedCardRepository.delete(hashedCard);
         return new HashedCardDTO("Success", true);
     }
