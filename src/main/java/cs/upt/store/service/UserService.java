@@ -2,10 +2,12 @@ package cs.upt.store.service;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 import javax.naming.NameNotFoundException;
+import javax.security.auth.login.LoginException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,7 @@ import cs.upt.store.model.HashedUser;
 import cs.upt.store.model.Order;
 import cs.upt.store.model.Product;
 import cs.upt.store.model.User;
+import cs.upt.store.repository.HashedCardRepository;
 import cs.upt.store.repository.HashedUserRepository;
 import cs.upt.store.repository.OrderRepository;
 import cs.upt.store.repository.ProductRepository;
@@ -34,8 +37,8 @@ public class UserService {
 
     @Autowired
     private OrderRepository orderRepository;
-    // @Autowired
-    // private HashedCardRepository hashedCardRepository;
+    @Autowired
+    private HashedCardRepository hashedCardRepository;
 
 
     public HashedUser insertUser(User user) throws NoSuchAlgorithmException, CardExistsException{
@@ -149,5 +152,26 @@ public class UserService {
             }
         }
         return new StatsDTO(buyers, count, "Completed", true);
+    }
+
+    public HashedUserDTO deleteUser(User user) throws Exception{
+        HashedUser hashedUser = null;
+        try{
+            hashedUser = new HashedUser(user);
+        }catch(Exception e){
+            throw e;
+        }
+        Optional<HashedUser> savedUser = hashedUserRepository.findById(user.getName());
+        if(savedUser.isEmpty()){
+            return new HashedUserDTO("User wasn't in the db", user.getName(), true, user.getType());
+        }
+        if(!Arrays.equals(savedUser.get().getPassword(), hashedUser.getPassword()) || !savedUser.get().getName().equals(hashedUser.getName()) || savedUser.get().getType() != hashedUser.getType()){
+            throw new LoginException("Credentials do not match, either password, type or username");
+        }
+        hashedUserRepository.delete(hashedUser);
+        if(hashedUser.getCreditCard() != null){
+            hashedCardRepository.delete(hashedCardRepository.findByHash(hashedUser.getCreditCard()));
+        }
+        return new HashedUserDTO("User no longer exists", user.getName(), true, user.getType());
     }
 }
