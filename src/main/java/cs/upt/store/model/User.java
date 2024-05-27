@@ -4,7 +4,6 @@ package cs.upt.store.model;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -12,7 +11,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
-import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class User{

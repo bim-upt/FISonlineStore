@@ -1,7 +1,6 @@
 package cs.upt.store.controller;
 
 
-import java.util.List;
 
 import javax.naming.NameNotFoundException;
 
@@ -98,6 +97,20 @@ public class UserController {
     public ResponseEntity<StatsDTO> getProductStats(@PathVariable String name, @RequestParam(required = true) String code){
         try{
             return new ResponseEntity<>(userService.getProductStats(name, code), HttpStatus.OK);
+        }catch(NameNotFoundException e){
+            return new ResponseEntity<>(new StatsDTO(0,0, e.getMessage(),false), HttpStatus.NOT_FOUND);
+        }catch(UserIsNotASellerException e){
+            return new ResponseEntity<>(new StatsDTO(0,0, e.getMessage(),false), HttpStatus.BAD_REQUEST);
+        }catch(Exception e){
+            System.err.println(e.getMessage());
+            return new ResponseEntity<>(new StatsDTO(0,0, e.getMessage(),false), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("{name}/getStats")
+    public ResponseEntity<StatsDTO> getStats(@PathVariable String name){
+        try{
+            return new ResponseEntity<>(userService.getStats(name), HttpStatus.OK);
         }catch(NameNotFoundException e){
             return new ResponseEntity<>(new StatsDTO(0,0, e.getMessage(),false), HttpStatus.NOT_FOUND);
         }catch(UserIsNotASellerException e){

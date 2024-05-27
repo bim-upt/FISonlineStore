@@ -16,12 +16,10 @@ import cs.upt.store.DTO.StatsDTO;
 import cs.upt.store.exceptions.CardExistsException;
 import cs.upt.store.exceptions.UserIsNotASellerException;
 import cs.upt.store.exceptions.UserIsSellerException;
-import cs.upt.store.model.HashedCard;
 import cs.upt.store.model.HashedUser;
 import cs.upt.store.model.Order;
 import cs.upt.store.model.Product;
 import cs.upt.store.model.User;
-import cs.upt.store.repository.HashedCardRepository;
 import cs.upt.store.repository.HashedUserRepository;
 import cs.upt.store.repository.OrderRepository;
 import cs.upt.store.repository.ProductRepository;
@@ -118,6 +116,33 @@ public class UserService {
                 if(orders.get(i).getProducts().get(j).getSeller().equals(name) && orders.get(i).getProducts().get(j).getCode().equals(code)){
                     if(added == 0){
                         buyers++;
+                        added = 1;
+                    }
+                    count++;
+                }
+            }
+        }
+        return new StatsDTO(buyers, count, "Completed", true);
+    }
+
+    public StatsDTO getStats(String name) throws NameNotFoundException, UserIsNotASellerException{
+        Optional<HashedUser> user = hashedUserRepository.findById(name);
+        if(user.isEmpty()){
+            throw new NameNotFoundException("User has not been found");
+        }
+        if(user.get().getType() == 0){
+            throw new UserIsNotASellerException("Buyers have no products");
+        }
+        List<Order> orders = orderRepository.findAll();
+        int count = 0;
+        int buyers = 0;
+        for(int i = 0; i < orders.size(); i++){
+            int added = 0;
+            for(int j = 0; j < orders.get(i).getProducts().size(); j++){
+                if(orders.get(i).getProducts().get(j).getSeller().equals(name)){
+                    if(added == 0){
+                        buyers++;
+                        added = 1;
                     }
                     count++;
                 }
