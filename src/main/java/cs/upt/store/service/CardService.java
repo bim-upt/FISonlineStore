@@ -7,9 +7,11 @@ import java.util.Optional;
 import javax.naming.NameNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import cs.upt.store.DTO.HashedCardDTO;
+import cs.upt.store.exceptions.CardExistsException;
 import cs.upt.store.exceptions.InsufficientFundsException;
 import cs.upt.store.exceptions.NonExistentCardException;
 import cs.upt.store.model.Card;
@@ -28,16 +30,20 @@ public class CardService {
     @Autowired
     private HashedUserRepository hashedUserRepository;
 
-    public HashedCard insertCard(Card card) throws NoSuchAlgorithmException, NameNotFoundException{
+    public HashedCard insertCard(Card card) throws NoSuchAlgorithmException, NameNotFoundException, CardExistsException{
         try{
             Optional<HashedUser> user = hashedUserRepository.findById(card.getOwner());
             if(user.isEmpty()){
                 throw new NameNotFoundException("No such user");
             }
+            if(user.get().getCreditCard() != null){
+                throw new CardExistsException("User already has a card");
+            }
             HashedCard result = new HashedCard(card);
             user.get().setCreditCard(result.getHash());
+            hashedCardRepository.insert(result);
             hashedUserRepository.save(user.get());
-            return hashedCardRepository.insert(result);
+            return result;
         }catch(Exception e){
             throw e;
         }
@@ -51,6 +57,9 @@ public class CardService {
             throw e;
         }
         Optional<HashedUser> user = hashedUserRepository.findById(hashedCard.getOwner());
+        if(hashedCardRepository.findByHash(hashedCard.getHash()) == null){
+            throw new NotFoundException();
+        }
         if(user.isPresent()){
             user.get().setCreditCard(null);
             hashedUserRepository.save(user.get());
@@ -72,7 +81,9 @@ public class CardService {
             throw new NonExistentCardException();
         }
         HashedCard existingCard = hashedCardRepository.findByHash(card.getHash());
-        
+        if(existingCard == null){
+            throw new NonExistentCardException("NO such card");
+        }
     
         //System.out.print(existingCard.getHash().toString() + '\n');
         //System.out.print(existingCard.getAmount().toString() + '\n');
@@ -89,6 +100,7 @@ public class CardService {
             return;
         }
         card.setAmount(existingCard.getAmount().add(amount));
+        hashedCardRepository.save(card);
         return;
     }
 }

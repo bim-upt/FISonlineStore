@@ -5,6 +5,7 @@ import java.util.List;
 import javax.naming.NameNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -36,7 +37,7 @@ public class OrderController {
             orderService.addOrder(orderDTO);
             return new ResponseEntity<>(orderDTO, HttpStatus.CREATED);
         }catch(NameNotFoundException e){
-            orderDTO.setMessage("Owner not found");
+            orderDTO.setMessage("Buyer not found");
             orderDTO.setStatus(false);
             orderDTO.setProducts(null);
             return new ResponseEntity<>(orderDTO, HttpStatus.NOT_FOUND);
@@ -54,12 +55,12 @@ public class OrderController {
             orderDTO.setMessage("No card associated to account");
             orderDTO.setStatus(false);
             orderDTO.setProducts(null);
-            return new ResponseEntity<>(orderDTO, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(orderDTO, HttpStatus.PAYMENT_REQUIRED);
         }catch(NoEligibleProductsException e){
             orderDTO.setMessage("No product was acceptable");
             orderDTO.setStatus(false);
             orderDTO.setProducts(null);
-            return new ResponseEntity<>(orderDTO, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(orderDTO, HttpStatus.BAD_REQUEST);
         }
         catch(Exception e){
             
@@ -76,7 +77,10 @@ public class OrderController {
             return new ResponseEntity<>(orderService.getBuyerOrder(name), HttpStatus.FOUND);
         }catch(UserIsSellerException e){
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-        }catch(Exception e){
+        }catch(NotFoundException e){
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+        catch(Exception e){
             System.out.println(e.getMessage());                             
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -88,7 +92,10 @@ public class OrderController {
             return new ResponseEntity<>(orderService.getSellerOrder(name), HttpStatus.FOUND);
         }catch(UserIsSellerException e){
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-        }catch(Exception e){
+        }catch(NotFoundException e){
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+        catch(Exception e){
             System.out.println(e.getMessage());                             
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }

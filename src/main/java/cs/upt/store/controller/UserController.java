@@ -83,7 +83,7 @@ public class UserController {
     @GetMapping("getHistory/{name}")
     public ResponseEntity<HistoryDTO> getHistory(@PathVariable String name){
         try{
-            return new ResponseEntity<>(new HistoryDTO(userService.getHistory(name), "Successful",true), HttpStatus.CREATED);
+            return new ResponseEntity<>(new HistoryDTO(userService.getHistory(name), "Successful",true), HttpStatus.OK);
         }catch(NameNotFoundException e){
             return new ResponseEntity<>(new HistoryDTO(null, e.getMessage(),false), HttpStatus.NOT_FOUND);
         }catch(UserIsSellerException e){
@@ -125,7 +125,7 @@ public class UserController {
     @DeleteMapping("/delete")
     public ResponseEntity<HashedUserDTO> deleteUser(@Valid @RequestBody User newUser){
         try{
-            return new ResponseEntity<>(userService.deleteUser(newUser), HttpStatus.CREATED);
+            return new ResponseEntity<>(userService.deleteUser(newUser), HttpStatus.OK);
         }catch(LoginException e){
             return new ResponseEntity<>(new HashedUserDTO(e.getMessage(), newUser.getName(), false, -1), HttpStatus.BAD_REQUEST);
         }catch(Exception e){
