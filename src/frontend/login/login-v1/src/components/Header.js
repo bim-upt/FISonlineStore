@@ -4,8 +4,8 @@ import Container from 'react-bootstrap/Container';
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { NavLink } from "react-router-dom";
-import axiosInstance from './axiosConfig'; // Importul instanței Axios
-
+import axiosInstance from './axiosConfig'; // Importul instanței Axios 
+import Carousel from 'react-bootstrap/Carousel'; // Import Carousel
 import "./HeaderStyle.css";
 
 const Header = () => {
@@ -153,31 +153,71 @@ const Header = () => {
                             <Navbar.Brand as={NavLink} to="/" className="d-flex align-items-center">
                                 <Button variant="outline-info" className="me-2 menu-button" onClick={handleMenuClick}>Menu</Button>
                             </Navbar.Brand>
-                            {showMenu && (
-                                <div className="d-flex flex-column">
-                                    <Button variant="outline" className="me-2 mb-2" onClick={() => handleButtonClick('getAllProducts')}>Get all products</Button>
-                                    <Button variant="outline" className="me-2 mb-2" onClick={() => handleButtonClick('addProduct')}>Add Product</Button>
-                                    <Button variant="outline" className="me-2 mb-2" onClick={() => handleButtonClick('modifyProduct')}>Modify Product</Button>
-                                    <Button variant="outline" className="me-2 mb-2" onClick={() => handleButtonClick('deleteProduct')}>Delete Product</Button>
-                                    <Button variant="outline" className="me-2 mb-2" onClick={() => handleButtonClick('addCard')}>Add Card</Button>
-                                    <Button variant="outline" className="me-2 mb-2" onClick={() => handleButtonClick('addFundsToCard')}>Add Funds to Card</Button>
-                                    <Button variant="outline" className="me-2 mb-2" onClick={() => handleButtonClick('deleteCard')}>Delete Card</Button>
-                                    <Button variant="outline" className="me-2 mb-2" onClick={() => handleButtonClick('placeOrder')}>Place Order</Button>
-                                    <Button variant="outline" className="me-2 mb-2" onClick={() => handleButtonClick('getBuyerOrders')}>Get Buyer's Orders</Button>
-                                    <Button variant="outline" className="me-2 mb-2" onClick={() => handleButtonClick('getSellerOrders')}>Get Seller's Orders</Button>
-                                    <Button variant="outline" className="me-2 mb-2" onClick={() => handleButtonClick('addUser')}>Add User</Button>
-                                    <Button variant="outline" className="me-2 mb-2" onClick={() => handleButtonClick('getUserInfo')}>Get User Info</Button>
-                                    <Button variant="outline" className="me-2 mb-2" onClick={() => handleButtonClick('addToUserHistory')}>Add to User's History</Button>
-                                    <Button variant="outline" className="me-2 mb-2" onClick={() => handleButtonClick('getUserHistory')}>Get User's History</Button>
-                                    <Button variant="outline" className="me-2 mb-2" onClick={() => handleButtonClick('getProductStats')}>Get Product Stats</Button>
-                                    <Button variant="outline" className="me-2 mb-2" onClick={() => handleButtonClick('getUserStats')}>Get User Stats</Button>
-                                    <Button variant="outline" className="me-2 mb-2" onClick={() => handleButtonClick('deleteUser')}>Delete User</Button>
-                                </div>
-                            )}
                         </Nav>
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
+            <div className="carousel-container">
+                {showMenu && (
+                    <div className="menu-container">
+                        <Button variant="outline" className="me-2 mb-2" onClick={() => handleButtonClick('getAllProducts')}>Get all products</Button>
+                        <Button variant="outline" className="me-2 mb-2" onClick={() => handleButtonClick('addProduct')}>Add Product</Button>
+                        <Button variant="outline" className="me-2 mb-2" onClick={() => handleButtonClick('modifyProduct')}>Modify Product</Button>
+                        <Button variant="outline" className="me-2 mb-2" onClick={() => handleButtonClick('deleteProduct')}>Delete Product</Button>
+                        <Button variant="outline" className="me-2 mb-2" onClick={() => handleButtonClick('addCard')}>Add Card</Button>
+                        <Button variant="outline" className="me-2 mb-2" onClick={() => handleButtonClick('addFundsToCard')}>Add Funds to Card</Button>
+                        <Button variant="outline" className="me-2 mb-2" onClick={() => handleButtonClick('deleteCard')}>Delete Card</Button>
+                        <Button variant="outline" className="me-2 mb-2" onClick={() => handleButtonClick('placeOrder')}>Place Order</Button>
+                        <Button variant="outline" className="me-2 mb-2" onClick={() => handleButtonClick('getBuyerOrders')}>Get Buyer's Orders</Button>
+                        <Button variant="outline" className="me-2 mb-2" onClick={() => handleButtonClick('getSellerOrders')}>Get Seller's Orders</Button>
+                        <Button variant="outline" className="me-2 mb-2" onClick={() => handleButtonClick('addUser')}>Add User</Button>
+                        <Button variant="outline" className="me-2 mb-2" onClick={() => handleButtonClick('getUserInfo')}>Get User Info</Button>
+                        <Button variant="outline" className="me-2 mb-2" onClick={() => handleButtonClick('addToUserHistory')}>Add to User's History</Button>
+                        <Button variant="outline" className="me-2 mb-2" onClick={() => handleButtonClick('getUserHistory')}>Get User's History</Button>
+                        <Button variant="outline" className="me-2 mb-2" onClick={() => handleButtonClick('getProductStats')}>Get Product Stats</Button>
+                        <Button variant="outline" className="me-2 mb-2" onClick={() => handleButtonClick('getUserStats')}>Get User Stats</Button>
+                        <Button variant="outline" className="me-2 mb-2" onClick={() => handleButtonClick('deleteUser')}>Delete User</Button>
+                    </div>
+                )}
+                <Carousel className="carousel">
+                    <Carousel.Item>
+                        <img
+                            className="d-block w-100"
+                            src={process.env.PUBLIC_URL + '/Logo.jpeg'} 
+                            alt="Logo"
+                        />
+                        <Carousel.Caption className="carousel-caption-text">
+                            <p> </p>
+                            <p> </p>
+                            <p>^Find anything you want here...^</p>
+                        </Carousel.Caption>
+                    </Carousel.Item>
+                    <Carousel.Item>
+                        <img
+                            className="d-block w-100"
+                            src={process.env.PUBLIC_URL + '/Slide2.jpeg'} 
+                            alt="Toys"
+                        />
+                        <Carousel.Caption>
+                        <p> </p>
+                            <p> </p>
+                            <p>#Starting from many cool toys for each age#</p>
+                        </Carousel.Caption>
+                    </Carousel.Item>
+                    <Carousel.Item>
+                        <img
+                            className="d-block w-100"
+                            src={process.env.PUBLIC_URL + '/Slide3.jpeg'} 
+                            alt="Healty food"
+                        />
+                        <Carousel.Caption>
+                        <p> </p>
+                            <p> </p>
+                            <p>!!!Up to healty-food for every budget!!!</p>
+                        </Carousel.Caption>
+                    </Carousel.Item>
+                </Carousel>
+            </div>
             <div>{message}</div>
         </div>
     );
