@@ -52,7 +52,7 @@ public class UserService {
             //         hashedCardRepository.insert(new HashedCard(user.getCreditCard()));
             //     }
             // }
-            if(hashedUserRepository.findById(user.getName()) != null){
+            if(hashedUserRepository.findById(user.getName()).isPresent()){
                 throw new DataIntegrityViolationException("User already exists");
             }
             return hashedUserRepository.insert(result);
@@ -173,9 +173,23 @@ public class UserService {
             throw new LoginException("Credentials do not match, either password, type or username");
         }
         hashedUserRepository.delete(hashedUser);
-        if(hashedUser.getCreditCard() != null){
-            hashedCardRepository.delete(hashedCardRepository.findByHash(hashedUser.getCreditCard()));
+        if(savedUser.get().getType() == 1){
+            List<Product> products = productRepository.findBySeller(savedUser.get().getName());
+            for(int i = 0; i < products.size(); i++){
+                productRepository.delete(products.get(i));
+            }
+        }else{
+            List<Order> orders = orderRepository.findByBuyer(savedUser.get().getName());
+            for(int i = 0; i < orders.size(); i++){
+                orderRepository.delete(orders.get(i));
+            }
         }
+        if(savedUser.get().getCreditCard() != null){
+            if(hashedCardRepository.findByHash(savedUser.get().getCreditCard()) != null){
+                hashedCardRepository.delete(hashedCardRepository.findByHash(savedUser.get().getCreditCard()));
+            }
+        }
+        //System.err.println("" + savedUser.get().getName()+": "+savedUser.get().getCreditCard());
         return new HashedUserDTO("User no longer exists", user.getName(), true, user.getType());
     }
 }
