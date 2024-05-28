@@ -1,0 +1,22 @@
+/* Stilurile pentru centrarea layout-ului */
+.layout-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centrare pe orizontală */
+    justify-content: center; /* Centrare pe verticală */
+    min-height: 100vh; /* Asigură o înălțime minimă a layout-ului pe întreaga înălțime a viewport-ului */
+    padding: 20px; /* Adaugă un padding pentru spațiere */
+}
+
+/* Stilurile pentru header */
+header {
+    text-align: center; /* Centrare pe orizontală */
+    margin-bottom: 20px; /* Spațiu între header și conținutul principal */
+}
+
+/* Stilurile pentru titlul din header */
+header h1 {
+    font-size: 36px; /* Dimensiunea fontului */
+    color: #333; /* Culoarea textului */
+    /* Alte stiluri dorite pentru titlu */
+}

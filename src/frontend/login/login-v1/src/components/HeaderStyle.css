@@ -1,0 +1,48 @@
+/* headerStyles.css */
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; /* Modificare a alinierii verticale */
+    padding: 10px;
+    background-color: #333; /* sau altă culoare dorită pentru fundal */
+}
+  
+.menu-button {
+    margin-top: 20px;
+    background-color: transparent;
+    border: 2px solid; /* Specificare grosime border */
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+  
+.menu-button:hover {
+    text-decoration: underline;
+} 
+
+.carousel-container {
+    display: flex;
+    justify-content: flex-start; /* Aliniere la stânga pentru a permite mutarea spre dreapta */
+    align-items: flex-start; /* Aliniere verticală */
+    height: 100vh; /* Înălțime de 100% din viewport height */
+    padding-left: 200px; /* Spațiu pentru a muta caruselul spre dreapta */
+    padding-top: 200px; /* Adăugăm padding pentru a coborî caruselul */
+}
+
+.carousel {
+    width: 100%; /* Ajustează lățimea caruselului după cum dorești */
+    max-width: 800px; /* Poți seta o lățime maximă pentru carusel */
+}
+
+.menu-container {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    left: 10px; /* Ajustează după necesități */
+    top: 70px; /* Ajustează după necesități */
+}
+
+.carousel-caption-text {
+    color: black; /* Setează culoarea textului la negru */
+}

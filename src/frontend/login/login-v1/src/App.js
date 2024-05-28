@@ -1,37 +1,35 @@
 import './App.css';
-import api from './api/axiosConfig';
+import api from './components/axiosConfig';
 import { useState, useEffect } from 'react';
-import Layout from './components/Layout'; 
-import {Routes, Route} from 'react-router-dom';
-import Home from './components/home';
+import { Routes, Route } from 'react-router-dom';
+import Layout from './components/Layout';
+import Home from './components/Home';
+import Header from './components/Header'; // Importă componenta Header
 
 function App() {
-  const [products, setProducts] = useState();
+  const [products, setProducts] = useState([]);
 
   const getProducts = async () => {
-  
     try {
-      const response = await axios.get('/api/products'); // Aici trebuie să fie adresa corectă a endpoint-ului care returnează produsele
-      
+      const response = await api.get('/api/products');
       setProducts(response.data);
-
     } catch (error) {
       console.error('Error fetching products:', error);
     }
-
-  } 
+  };
 
   useEffect(() => {
     getProducts();
-  }, [])
+  }, []);
 
   return (
-    <div className = "App">
-      <Routes> 
-        <Route path="/" element={<Layout />} > </Route>
-        <Route path="/" element={<Home />} > </Route>
+    <div className="App">
+      <Header /> {/* Include componenta Header */}
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home products={products} />} />
+        </Route>
       </Routes>
-
     </div>
   );
 }
