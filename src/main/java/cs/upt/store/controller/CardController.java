@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.client.HttpClientErrorException.NotFound;
 
 import cs.upt.store.DTO.HashedCardDTO;
@@ -35,6 +36,7 @@ public class CardController {
     private CardService cardService;
 
     @PostMapping
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<HashedCardDTO> addCard(@Valid @RequestBody Card newCard){
         try{
             cardService.insertCard(newCard);
@@ -53,6 +55,7 @@ public class CardController {
     } 
 
     @PutMapping("addAmount")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<HashedCardDTO> addToCardAmount(@RequestParam(required = true) BigDecimal amount, @Valid @RequestBody Card updatedCard){
         try{
             HashedCard resultingCard = new HashedCard(updatedCard);
@@ -70,6 +73,7 @@ public class CardController {
     }
 
     @DeleteMapping("delete")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<HashedCardDTO> deleteCard(@Valid @RequestBody Card newCard){
         try{
             return new ResponseEntity<>(cardService.deleteCard(newCard), HttpStatus.OK);

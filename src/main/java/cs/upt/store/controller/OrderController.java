@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import cs.upt.store.DTO.OrderDTO;
 import cs.upt.store.DTO.ProductSoldDTO;
@@ -32,6 +33,7 @@ public class OrderController {
     private OrderService orderService;
 
     @PostMapping("/place")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<OrderDTO> addOrder(@Valid @RequestBody OrderDTO orderDTO){
         try{
             orderService.addOrder(orderDTO);
@@ -72,6 +74,7 @@ public class OrderController {
     }
 
     @GetMapping("/buyer/{name}")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<List<Order>> getBuyerOrder(@PathVariable String name){
         try{
             return new ResponseEntity<>(orderService.getBuyerOrder(name), HttpStatus.FOUND);
@@ -87,6 +90,7 @@ public class OrderController {
     }
 
     @GetMapping("/seller/{name}")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<List<ProductSoldDTO>> getSellerOrder(@PathVariable String name){
         try{
             return new ResponseEntity<>(orderService.getSellerOrder(name), HttpStatus.FOUND);

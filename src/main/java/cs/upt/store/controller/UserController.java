@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import cs.upt.store.DTO.HashedUserDTO;
 import cs.upt.store.DTO.HistoryDTO;
@@ -37,6 +38,7 @@ public class UserController {
     private UserService userService;
 
     @PostMapping
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<HashedUserDTO> addUser(@Valid @RequestBody User newUser){
         try{
             userService.insertUser(newUser);
@@ -50,6 +52,7 @@ public class UserController {
     }
 
     @GetMapping("/{name}")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<HashedUserDTO> getUser(@PathVariable String name){
         try{
             HashedUserDTO response = userService.getUser(name);
@@ -62,6 +65,7 @@ public class UserController {
         }
     }
     @PostMapping("addHistory/{name}")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<ProductBoughtDTO> addToHistory(@PathVariable String name, @RequestBody ProductBoughtDTO productBoughtDTO){
         try{
             return new ResponseEntity<>(userService.addToHistory(name, productBoughtDTO), HttpStatus.CREATED);
@@ -81,6 +85,7 @@ public class UserController {
         }
     }
     @GetMapping("getHistory/{name}")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<HistoryDTO> getHistory(@PathVariable String name){
         try{
             return new ResponseEntity<>(new HistoryDTO(userService.getHistory(name), "Successful",true), HttpStatus.OK);
@@ -95,6 +100,7 @@ public class UserController {
     }
 
     @GetMapping("{name}/getProductStats")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<StatsDTO> getProductStats(@PathVariable String name, @RequestParam(required = true) String code){
         try{
             return new ResponseEntity<>(userService.getProductStats(name, code), HttpStatus.OK);
@@ -109,6 +115,7 @@ public class UserController {
     }
 
     @GetMapping("{name}/getStats")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<StatsDTO> getStats(@PathVariable String name){
         try{
             return new ResponseEntity<>(userService.getStats(name), HttpStatus.OK);
@@ -123,6 +130,7 @@ public class UserController {
     }
 
     @DeleteMapping("/delete")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<HashedUserDTO> deleteUser(@Valid @RequestBody User newUser){
         try{
             return new ResponseEntity<>(userService.deleteUser(newUser), HttpStatus.OK);
