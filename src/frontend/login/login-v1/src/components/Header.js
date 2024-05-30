@@ -19,6 +19,10 @@ const Header = () => {
     const handleButtonClick = async (action) => {
         try {
             let response;
+
+
+            console.log(action);
+            
             switch (action) {
                 case 'getAllProducts':
                     response = await axiosInstance.get('/v1/products');

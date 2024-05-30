@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import cs.upt.store.DTO.ProductDTO;
 import cs.upt.store.exceptions.UserIsNotASellerException;
@@ -30,7 +31,8 @@ import jakarta.validation.Valid;
 public class ProductController {
     @Autowired
     private ProductService productService;
-    
+
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping
     public ResponseEntity<ProductDTO> addProduct(@Valid @RequestBody Product newProduct){
         try{
@@ -50,6 +52,7 @@ public class ProductController {
         }
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @PutMapping("/modify")
     public ResponseEntity<ProductDTO> modifyProduct(@Valid @RequestBody Product newProduct){
         try{
@@ -63,6 +66,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/delete")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<ProductDTO> deleteProduct(@RequestParam String code, @RequestParam String seller){
         try{
             return new ResponseEntity<>(new ProductDTO(productService.deleteProduct(code, seller), true, "Product deleted"), HttpStatus.OK);
@@ -74,6 +78,7 @@ public class ProductController {
     }
 
     @GetMapping
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<List<ProductDTO>> getProducts(){
         try{
             List<ProductDTO> products = productService.getProducts();
