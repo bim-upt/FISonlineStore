@@ -1,3 +1,5 @@
+## Setup
+Go to src/main/resources/application.properties and replace the URI and database with your own, the one over there is disabled.
 
 ## API Reference
 
