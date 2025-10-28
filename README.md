@@ -1,3 +1,47 @@
+# 🛒 E-Commerce RESTful API Platform
+
+<div align="center">
+  
+  [![Java](https://img.shields.io/badge/Java-17+-orange.svg)](https://www.oracle.com/java/)
+  [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.0+-green.svg)](https://spring.io/projects/spring-boot)
+  [![MongoDB](https://img.shields.io/badge/MongoDB-6.0+-green.svg)](https://www.mongodb.com/)
+  [![REST API](https://img.shields.io/badge/API-RESTful-blue.svg)](#)
+  
+</div>
+
+
+## 🚀 Overview
+A comprehensive full-stack e-commerce platform with **RESTful API architecture** featuring product catalog management, **order processing system**, secure payment handling, and **role-based authentication** for buyers and sellers. Includes purchase history tracking and **analytics dashboard** with real-time seller insights.
+
+## ✨ Key Features
+- **🔐 Role-Based Access Control** - Separate buyer and seller functionalities
+- **💳 Payment Card Management** - Secure card storage and transaction processing
+- **📦 Order Processing** - Complete order lifecycle management
+- **📊 Analytics Dashboard** - Sales statistics and performance metrics
+- **🛍️ Product Catalog** - Full CRUD operations for inventory management
+- **📈 Purchase History** - Comprehensive transaction tracking
+
+## 🛠️ Technology Stack
+
+### Backend (76.5%)
+- **Java 17+** - Core programming language
+- **Spring Boot** - Application framework
+- **Maven** - Dependency management
+- **MongoDB** - NoSQL database
+- **Spring Data** - Data persistence layer
+- **RESTful APIs** - HTTP-based web services
+
+### Frontend (23.5%)
+- **JavaScript (17.5%)** - Client-side scripting
+- **HTML5 (2.0%)** - Markup structure
+- **CSS3 (4.0%)** - Styling and responsive design
+
+## 🏗️ Architecture Patterns
+- **MVC Pattern** - Separation of concerns
+- **Dependency Injection** - Loose coupling
+- **DTO Pattern** - Secure data transfer
+- **Service Layer** - Business logic encapsulation
+
 ## Setup
 Go to src/main/resources/application.properties and replace the URI and database with your own, the one over there is disabled.
 
@@ -94,11 +138,6 @@ Response
 `price`      | `numeric` |  Item's price|
 `message`      | `string` |  Additional information|
 |`status`      | `boolean` |  Success status |
-
-
-
-
-
 
 
 
